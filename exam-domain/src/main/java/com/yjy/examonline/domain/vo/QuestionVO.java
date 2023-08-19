@@ -36,7 +36,7 @@ public class QuestionVO implements Serializable {
     private List<String> endAnswerList;
 
     /**
-     * 批阅考卷时记录考题的批阅信息（针对于填空题和综合题）
+     * 批阅考卷时记录考题的批阅信息（针对于填空题和综合题）暂定方案
      */
     private String review = "无";
 
