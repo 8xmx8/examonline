@@ -1,0 +1,167 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考试 爱坤集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <link rel="stylesheet" type="text/css" href="css/page.css"/>
+    <script src="js/page.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <!-- 自定义动态内容 -->
+    <input type="hidden" id="exam-endTime"
+           th:value="${exam.endTime==null?'':#dates.format(exam.endTime,'yyyy-MM-dd HH:mm:ss')}"/>
+    <input type="hidden" id="exam-duration" th:value="${exam.duration==null?'':exam.duration}"/>
+    <input type="hidden" id="page-startTime" th:value="${studentExamVO.studentExam.startTime.getTime()}"/>
+    <input type="hidden" id="exam-id" th:value="${studentExamVO.studentExam.examId}"/>
+    <input type="hidden" id="student-id" th:value="${studentExamVO.studentExam.studentId}"/>
+    <div class="page-container">
+        <div class="page-part-1">
+            <ul>
+                <li class="right">
+                    <div th:type="${exam.duration==null?'time':'duration'}" id="time-show">2020-01-01 10:00:00</div>
+                </li>
+                <li th:text="${exam.name + '【' + session.loginStudent.sname}+'】'"></li>
+            </ul>
+        </div>
+        <div class="page-part-2">
+            <dl>
+                <th:block th:each="question:${questions}">
+                    <th:block
+                            th:if="${questionStat.index==0 or question.type != questions.get(questionStat.index-1).type}">
+                        <dt th:text="${question.type}"></dt>
+                    </th:block>
+                    <dd th:text="${questionStat.index+1}"
+                        th:class="${questionStat.index==0?'active':''}+' '+${studentExamVO.answerList.size()==0?'':(question.type!='填空题' and studentExamVO.answerList.get(questionStat.index)!=-1 and studentExamVO.answerList.get(questionStat.index)!=''?'complete':'')}"
+                        onclick="page.changeIndex(this)"></dd>
+                </th:block>
+            </dl>
+            <div style="clear:both">
+                <button class="btn btn-primary" onclick="page.toSubmit()">
+                    <span></span> 交卷
+                </button>
+            </div>
+            <hr style="background:#fff;height:2px;"/>
+            <ul>
+                <li>未答：<span></span></li>
+                <li>在答：<span style="background:#5bc0de;"></span></li>
+                <li>已答：<span style="background:#5cb85c;"></span></li>
+                <li>标记：<span style="background:#f0ad4e;"></span></li>
+            </ul>
+        </div>
+        <div class="page-part-3">
+
+            <div class="page-3-top">
+                <ul>
+                    <li><a href="javascript:page.changePrev()">上一题</a></li>
+                    <li><label><input class="markBtn" type="checkbox" onclick="page.mark(this)"/> <a>标记</a></label>
+                    </li>
+                    <li><a href="javascript:page.changeNext()">下一题</a></li>
+                </ul>
+            </div>
+            <div class="page-3-content">
+
+                <div class="page-question">
+                    <ul th:each="question:${questions}" th:class="${questionStat.index==0?'active':''}">
+                        <li>
+                            <b th:text="${question.index+'. '+question.type+'（'+(question.type=='填空题'?'每空':'每题')+question.score+'分）'}"></b>
+                        </li>
+                        <li>
+                            <div th:utext="${question.subject}"></div>
+                        </li>
+                        <th:block th:if="${question.type=='单选题'}">
+                            <li class="row" th:each="option:${question.optionList}">
+                                <div class="col-md-1"><span
+                                        th:class="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index)==optionStat.index?'active':'')}+' page-option'"
+                                        th:value="${optionStat.index}"
+                                        th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></span>
+                                </div>
+                                <div class="col-md-10">
+                                    <div th:utext="${option}"></div>
+                                </div>
+                            </li>
+                        </th:block>
+
+                        <th:block th:if="${question.type=='多选题'}">
+                            <li class="row" th:each="option:${question.optionList}">
+                                <div class="col-md-1"><span
+                                        th:class="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index)==-1?'':(#lists.contains(studentExamVO.answerList.get(questionStat.index),optionStat.index)?'active':''))}+' page-option'"
+                                        th:value="${optionStat.index}"
+                                        th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></span>s
+                                </div>
+                                <div class="col-md-10">
+                                    <div th:utext="${option}"></div>
+                                </div>
+                            </li>
+                        </th:block>
+
+                        <th:block th:if="${question.type=='判断题'}">
+                            <li class="row">
+                                <div class="col-md-2"><span
+                                        th:class="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index)==0?'active':'')}+' page-option'"
+                                        value="0">正确</span></div>
+                                <div class="col-md-2"><span
+                                        th:class="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index)==1?'active':'')}+' page-option'"
+                                        value="1">错误</span></div>
+                            </li>
+                        </th:block>
+
+                        <th:block th:if="${question.type=='填空题'}">
+                            <li class="row" th:each="answer:${question.answerList}">
+                                <div class="col-md-2"><span class="page-option"
+                                                            th:text="${'填空'+(answerStat.index+1)}"></span></div>
+                                <div class="col-md-10">
+                                    <input class="form-control question4-box"
+                                           th:value="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index).get(answerStat.index))}"/>
+                                </div>
+                            </li>
+                        </th:block>
+
+                        <th:block th:if="${question.type=='综合题'}">
+                            <li class="row">
+                                <div class="col-md-2"><span class="page-option" th:text="答案"></span></div>
+                                <div class="col-md-10">
+                                    <div class="question5-box"
+                                         th:utext="${studentExamVO.answerList.size()==0?'':(studentExamVO.answerList.get(questionStat.index))}"></div>
+                                </div>
+                            </li>
+                        </th:block>
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        //网页加载，初始化时间
+        page.timeHandle();
+
+        //网页加载，初始化选项点击操作
+        page.optionHandle();
+
+        //网页加载，初始化综合题文本编辑器
+        page.question5Handle()
+
+        //网页加载，开启一个定时器，轮询更新考试答案
+        page.startAnwserCacheTimer();
+
+    </script>
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

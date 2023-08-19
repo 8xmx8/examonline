@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.ExamMapper">
+    <resultMap id="examMap" type="com.yjy.examonline.domain.Exam">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="course" jdbcType="VARCHAR" property="course"/>
+        <result column="template_id" jdbcType="BIGINT" property="templateId"/>
+        <result column="tid" jdbcType="BIGINT" property="tid"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="duration" jdbcType="INTEGER" property="duration"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , name, course, template_id, tid, start_time, end_time, duration, status, yl1,
+    yl2, yl3, yl4, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="examMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_exam
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Exam">
+        insert into t_exam (id, name, course,
+                            template_id, tid, start_time,
+                            end_time, duration, status,
+                            yl1, yl2, yl3, yl4,
+                            create_time, update_time)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{course,jdbcType=VARCHAR},
+                #{templateId,jdbcType=BIGINT}, #{tid,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
+                #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR},
+                now(), #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Exam">
+        insert into t_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="course != null">
+                course,
+            </if>
+            <if test="templateId != null">
+                template_id,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="course != null">
+                #{course,jdbcType=VARCHAR},
+            </if>
+            <if test="templateId != null">
+                #{templateId,jdbcType=BIGINT},
+            </if>
+            <if test="tid != null">
+                #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Exam">
+        update t_exam
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="course != null">
+                course = #{course,jdbcType=VARCHAR},
+            </if>
+            <if test="templateId != null">
+                template_id = #{templateId,jdbcType=BIGINT},
+            </if>
+            <if test="tid != null">
+                tid = #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+                duration=null,
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=INTEGER},
+                start_time=null,
+                end_time=null
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Exam">
+        update t_exam
+        set name        = #{name,jdbcType=VARCHAR},
+            course      = #{course,jdbcType=VARCHAR},
+            template_id = #{templateId,jdbcType=BIGINT},
+            tid         = #{tid,jdbcType=BIGINT},
+            start_time  = #{startTime,jdbcType=TIMESTAMP},
+            end_time    = #{endTime,jdbcType=TIMESTAMP},
+            duration    = #{duration,jdbcType=INTEGER},
+            status      = #{status,jdbcType=VARCHAR},
+            yl1         = #{yl1,jdbcType=VARCHAR},
+            yl2         = #{yl2,jdbcType=VARCHAR},
+            yl3         = #{yl3,jdbcType=VARCHAR},
+            yl4         = #{yl4,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="find" resultMap="examMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_exam
+        <where>
+            tid = #{tid}
+            <if test="name != null and name != '' ">
+                and `name` like concat('%',#{name},'%')
+            </if>
+            <if test="status != null and status != '' ">
+                and status = #{status}
+            </if>
+            <choose>
+                <when test="(startTime != null and startTime != '')  and  (endTime == null or endTime == '')">
+                    and ifnull(start_time,create_time) &gt;= #{startTime}
+                </when>
+                <when test="(startTime == null or startTime=='')  and  (endTime != null and endTime != '')">
+                    and ifnull(start_time,create_time) &lt;= #{endTime}
+                </when>
+                <when test="(startTime != null and startTime != '')  and  (endTime != null and endTime != '')">
+                    and ifnull(start_time,create_time) between #{startTime} and #{endTime}
+                </when>
+                <otherwise>
+                    and ifnull(start_time,create_time) &gt;= concat(year(now()) , '-' , month(now()) , '-' , '01' )
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="findByStudent" resultType="map">
+        select
+        e.id examId,
+        e.name,
+        e.start_time startTime ,
+        e.end_time endTime,
+        e.duration,
+        (case e.status when '未考试' then '未开始'
+        when '考试中' then '正在进行'
+        else '已结束' end ) as state,
+        se.status
+        from
+        t_exam e
+        inner join
+        t_student_exam se on
+        e.id = se.exam_id
+        and se.student_id = #{sid}
+        and e.status != '未发布'
+        and e.status != '丢弃'
+        <where>
+            <choose>
+                <when test="timeFlag == 1">
+                    and (duration is not null and se.status != '已完成' and e.status != '已完成')
+                    or (duration is not null and se.status = '已完成' and se.end_time between
+                    concat(date_format(now(),'%Y-%m-%d'),' 00:00:00') and concat(date_format(now(),'%Y-%m-%d'),'
+                    23:59:59') )
+                    or (duration is null and e.start_time between concat(date_format(now(),'%Y-%m-%d'),' 00:00:00') and
+                    concat(date_format(now(),'%Y-%m-%d'),' 23:59:59') )
+                </when>
+                <when test="timeFlag == 2">
+                    and (duration is not null and se.status != '已完成' and e.status != '已完成')
+                    or (duration is not null and se.status = '已完成' and se.end_time between now() - interval
+                    weekday(now()) day and now() + interval 6-weekday(now()) day )
+                    or (duration is null and e.start_time between now() - interval weekday(now()) day and now() +
+                    interval 6-weekday(now()) day)
+                </when>
+                <when test="timeFlag == 3">
+                    and (duration is not null and se.status != '已完成' and e.status != '已完成')
+                    or (duration is not null and se.status = '已完成' and se.end_time between
+                    concat(date_format(now(),'%Y-%m'),'-01 00:00:00') and concat(date_format(now(),'%Y-%m'),'-31
+                    23:59:59'))
+                    or (duration is null and e.start_time between concat(date_format(now(),'%Y-%m'),'-01 00:00:00') and
+                    concat(date_format(now(),'%Y-%m'),'-31 23:59:59'))
+                </when>
+            </choose>
+        </where>
+
+    </select>
+
+
+    <update id="changeStatus">
+        update t_exam
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+</mapper>

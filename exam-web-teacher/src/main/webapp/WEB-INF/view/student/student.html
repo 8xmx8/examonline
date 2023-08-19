@@ -1,0 +1,128 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理 爱坤教育集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <script src="js/student.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+
+    <!-- 考试信息模块使用的模板碎片 -->
+    <div id="exam-use-classes-students">
+        <!-- 班级信息展示 -->
+        <div class="part-1">
+            <div class="form-inline search-box">
+                <div class="form-group form-sm">
+                    <label for="search-grade">年级</label>
+                    <input type="text" class="form-control" id="search-grade">
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-major">专业</label>
+                    <input type="text" class="form-control" id="search-major">
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-classNo">班级</label>
+                    <input type="text" class="form-control" id="search-classNo">
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="student.toClassQuery()">
+                        <span class="glyphicon glyphicon-zoom-in"></span> 查询
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="student.toClearClass()">
+                        <span class="glyphicon glyphicon-zoom-out"></span> 清空
+                    </button>
+                </div>
+
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="student.deleteClasses()">
+                        <span class="glyphicon glyphicon-trash"></span> 批量删除班级
+                    </button>
+                </div>
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="student.toExportClasses()">
+                        <span class="glyphicon glyphicon-log-out"></span> 导出班级信息
+                    </button>
+                </div>
+            </div>
+
+            <div th:replace="student/classesTemplate::classesTemplate"></div>
+
+        </div>
+        <!-- 学生信息展示 -->
+        <div class="part-2">
+            <div class="form-inline search-box">
+                <div class="form-group form-sm">
+                    <label for="search-code">学号</label>
+                    <input type="text" class="form-control" id="search-code">
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-sname">姓名</label>
+                    <input type="text" class="form-control" id="search-sname">
+                </div>
+
+                <div class="form-group">
+                    <label for="search-className">班级</label>
+                    <input type="text" class="form-control" id="search-className">
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="student.toStudentQuery()">
+                        <span class="glyphicon glyphicon-zoom-in"></span> 查询
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="student.toClearStudent()">
+                        <span class="glyphicon glyphicon-zoom-out"></span> 清空
+                    </button>
+                </div>
+
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="student.toAdd()">
+                        <span class="glyphicon glyphicon-user"></span> 添加学生
+                    </button>
+                </div>
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="student.deleteStudents()">
+                        <span class="glyphicon glyphicon-trash"></span> 批量删除学生
+                    </button>
+                </div>
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="student.toImports()">
+                        <span class="glyphicon glyphicon-cloud-upload"></span> 导入学生信息
+                    </button>
+                </div>
+                <!--<div class="form-group right">
+                    <button type="button" class="btn btn-default" onclick="teacher.toClearTeacherQuery()">
+                        <span class="glyphicon glyphicon-log-out"></span> 导出学生信息
+                    </button>
+                </div>-->
+            </div>
+
+            <table th:replace="student/studentsTemplate::studentsTemplate"></table>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

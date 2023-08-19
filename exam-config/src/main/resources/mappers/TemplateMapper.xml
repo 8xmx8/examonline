@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.TemplateMapper">
+    <resultMap id="templateMap" type="com.yjy.examonline.domain.Template">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="question1" jdbcType="VARCHAR" property="question1"/>
+        <result column="question2" jdbcType="VARCHAR" property="question2"/>
+        <result column="question3" jdbcType="VARCHAR" property="question3"/>
+        <result column="question4" jdbcType="VARCHAR" property="question4"/>
+        <result column="question5" jdbcType="VARCHAR" property="question5"/>
+        <result column="total_score" jdbcType="INTEGER" property="totalScore"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="tid" jdbcType="BIGINT" property="tid"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , name, type, question1, question2, question3, question4, question5, total_score,
+    status, tid, yl1, yl2, yl3, yl4, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="templateMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_template
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_template
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Template">
+        insert into t_template (id, name, type,
+                                question1, question2, question3,
+                                question4, question5, total_score,
+                                status, tid, yl1, yl2,
+                                yl3, yl4, create_time,
+                                update_time)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+                #{question1,jdbcType=VARCHAR}, #{question2,jdbcType=VARCHAR}, #{question3,jdbcType=VARCHAR},
+                #{question4,jdbcType=VARCHAR}, #{question5,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER},
+                #{status,jdbcType=VARCHAR}, #{tid,jdbcType=BIGINT}, #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR},
+                #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR}, now(),
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Template">
+        insert into t_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="question1 != null">
+                question1,
+            </if>
+            <if test="question2 != null">
+                question2,
+            </if>
+            <if test="question3 != null">
+                question3,
+            </if>
+            <if test="question4 != null">
+                question4,
+            </if>
+            <if test="question5 != null">
+                question5,
+            </if>
+            <if test="totalScore != null">
+                total_score,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="question1 != null">
+                #{question1,jdbcType=VARCHAR},
+            </if>
+            <if test="question2 != null">
+                #{question2,jdbcType=VARCHAR},
+            </if>
+            <if test="question3 != null">
+                #{question3,jdbcType=VARCHAR},
+            </if>
+            <if test="question4 != null">
+                #{question4,jdbcType=VARCHAR},
+            </if>
+            <if test="question5 != null">
+                #{question5,jdbcType=VARCHAR},
+            </if>
+            <if test="totalScore != null">
+                #{totalScore,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Template">
+        update t_template
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="question1 != null">
+                question1 = #{question1,jdbcType=VARCHAR},
+            </if>
+            <if test="question2 != null">
+                question2 = #{question2,jdbcType=VARCHAR},
+            </if>
+            <if test="question3 != null">
+                question3 = #{question3,jdbcType=VARCHAR},
+            </if>
+            <if test="question4 != null">
+                question4 = #{question4,jdbcType=VARCHAR},
+            </if>
+            <if test="question5 != null">
+                question5 = #{question5,jdbcType=VARCHAR},
+            </if>
+            <if test="totalScore != null">
+                total_score = #{totalScore,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                tid = #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+
+            create_time = now(),
+            update_time = now()
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Template">
+        update t_template
+        set name        = #{name,jdbcType=VARCHAR},
+            type        = #{type,jdbcType=VARCHAR},
+            question1   = #{question1,jdbcType=VARCHAR},
+            question2   = #{question2,jdbcType=VARCHAR},
+            question3   = #{question3,jdbcType=VARCHAR},
+            question4   = #{question4,jdbcType=VARCHAR},
+            question5   = #{question5,jdbcType=VARCHAR},
+            total_score = #{totalScore,jdbcType=INTEGER},
+            status      = #{status,jdbcType=VARCHAR},
+            tid         = #{tid,jdbcType=BIGINT},
+            yl1         = #{yl1,jdbcType=VARCHAR},
+            yl2         = #{yl2,jdbcType=VARCHAR},
+            yl3         = #{yl3,jdbcType=VARCHAR},
+            yl4         = #{yl4,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="find" resultMap="templateMap">
+        select
+        distinct
+        <include refid="Base_Column_List"></include>
+        from
+        (
+        select
+        t.* ,
+        '私有' g_status
+        from
+        t_template t
+        where
+        tid = #{tid}
+
+        union
+
+        select
+        t.*,
+        '公有' g_status
+        from
+        t_template t
+        where
+        tid != #{tid}
+        and status = '公有'
+
+        union
+
+        select
+        t.*,
+        '被分享' g_status
+        from
+        t_template t
+        where
+        t.id in (select template_id from t_template_teacher where teacher_id = #{tid})
+        ) tab
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="course != null and course != ''">
+                and course = #{course}
+            </if>
+            <if test="type != null and type != ''">
+                and `type` = #{type}
+            </if>
+            <choose>
+                <when test="shareid != null and shareid != ''">
+                    and tid = #{shareid}
+                    and g_status = '被分享'
+                </when>
+                <otherwise>
+                    <choose>
+                        <when test="status == '私有'">
+                            and tid = #{tid}
+                            and status = '私有'
+                        </when>
+                        <when test="status == '公有'">
+                            and status = '公有'
+                        </when>
+                        <when test="status == '被分享'">
+                            and g_status = '被分享'
+                        </when>
+                        <when test="status=='丢弃'">
+                            and status = '丢弃'
+                        </when>
+                    </choose>
+                </otherwise>
+            </choose>
+        </where>
+        order by create_time desc
+    </select>
+    <delete id="delete">
+        delete
+        from t_template
+        where id = #{id}
+          and status = '私有'
+          and tid = #{tid}
+          and id not in (select template_id from t_template_teacher)
+    </delete>
+
+    <insert id="share">
+        insert into t_template_teacher
+        values (#{templateId}, #{teacherId})
+    </insert>
+</mapper>

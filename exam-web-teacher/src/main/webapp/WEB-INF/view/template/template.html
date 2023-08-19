@@ -1,0 +1,185 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>模板管理 爱坤教育集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <link rel="stylesheet" type="text/css" href="css/template.css">
+
+    <script src="js/template.js"></script>
+    <script src="js/teacher.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+
+    <!-- exam-use-template  这个div只在考试信心填充中选择模板时生效 -->
+    <div id="exam-use-template">
+        <div id="part-1">
+            <div class="form-inline search-box">
+                <div class="form-group form-sm">
+                    <label for="search-name">模板名称</label>
+                    <input type="text" class="form-control" id="search-name">
+                </div>
+
+                <div class="form-group">
+                    <label for="search-course">关联课程</label>
+                    <input type="text" class="form-control" id="search-course" list="search-course-list">
+                    <datalist id="search-course-list">
+                        <option th:each="course:${courses}" th:text="${course}"></option>
+                    </datalist>
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-type">模板类型</label>
+                    <select class="form-control" id="search-type">
+                        <option value="">=请选择=</option>
+                        <option>静态模板</option>
+                        <option>动态模板</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-status">模板状态</label>
+                    <select class="form-control" id="search-status">
+                        <option value="">=请选择=</option>
+                        <option>私有</option>
+                        <option>公有</option>
+                        <option>被分享</option>
+                        <option>丢弃</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-sm">
+                    <label for="search-share">分享教师</label>
+                    <select class="form-control" id="search-share">
+                        <option value="">=请选择=</option>
+                        <option th:each="teacher:${teachers}" th:value="${teacher.id}"
+                                th:text="${teacher.tname}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="template.toQuery()">
+                        <span class="glyphicon glyphicon-zoom-in"></span> 查询
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" onclick="template.toClearQuery()">
+                        <span class="glyphicon glyphicon-zoom-out"></span> 清空查询
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="part-2" style="width:100%;">
+            <table id="templateGrid" class="table table-striped table-hover ">
+                <thead>
+                <tr>
+                    <th width="40"><input type="checkbox"/></th>
+                    <th width="60">序号</th>
+                    <th width="120">模板类型</th>
+                    <th width="150">模板名称</th>
+                    <th width="120">关联课程</th>
+                    <th width="100">总分</th>
+                    <th width="100">模板状态</th>
+                    <th width="100">所属教师</th>
+                    <th width="120">分享给</th>
+                    <th width="150">创建时间</th>
+                    <th width="150">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${pageVO.data == null or pageVO.data.size() == 0}">
+                    <tr>
+                        <td colspan="11" align="center">没有任何查询结果</td>
+                    </tr>
+                </th:block>
+                <th:block th:unless="${pageVO.data == null or pageVO.data.size() == 0}">
+                    <tr th:each="template:${pageVO.data}">
+                        <td><input type="checkbox" th:value="${template.id}"/></td>
+                        <td th:text="${templateStat.index+1}"></td>
+                        <td>
+                            <span th:if="${template.type=='静态模板'}" class="label label-primary">静态模板</span>
+                            <span th:if="${template.type=='动态模板'}" class="label label-danger">动态模板</span>
+                        </td>
+                        <td th:text="${template.name}"></td>
+                        <td th:text="${template.yl1}"></td>
+                        <td th:text="${template.totalScore}"></td>
+                        <td>
+                            <span th:if="${template.status=='私有' and template.tid == session.loginTeacher.id}"
+                                  class="label label-info"
+                                  th:oncontextmenu="return template.toSetStatus([[${template.id}]])">私有</span>
+                            <span th:if="${template.status=='公有'}" class="label label-success">公有</span>
+                            <span th:if="${template.status=='私有' and template.tid != session.loginTeacher.id}"
+                                  class="label label-warning">被分享</span>
+                            <span th:if="${template.status=='丢弃'}" class="label label-default">丢弃</span>
+                        </td>
+                        <td th:text="${template.teacher.tname}"></td>
+                        <td>
+                            <select class="form-control"
+                                    th:if="${template.shareTeachers != null and template.shareTeachers.size() != 0}">
+                                <option th:each="teacher:${template.shareTeachers}" th:text="${teacher.tname}"></option>
+                            </select>
+                            <select class="form-control"
+                                    th:unless="${template.shareTeachers != null and template.shareTeachers.size() != 0}">
+                                <option>无</option>
+                            </select>
+                        </td>
+                        <td th:text="${#dates.format(template.createTime,'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"
+                                    th:onclick="template.toEdit([[${template.id}]],[[${template.teacher.tname}]],[[${session.loginTeacher.tname}]])">
+                                <span class="glyphicon glyphicon-pencil"></span> 编辑
+                            </button>
+                            <button class="btn btn-danger btn-sm" th:onclick="template.toDelete([[${template.id}]])">
+                                <span class="glyphicon glyphicon-trash"></span> 删除
+                            </button>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+            <nav>
+                <ul class="pagination">
+
+                    <li th:if="${pageVO.curr==1}" class="disabled">
+                        <a href="javascript:void(0)"><span>&laquo;</span></a>
+                    </li>
+                    <li th:unless="${pageVO.curr==1}">
+                        <a href="javascript:void(0)" th:onclick="template.toPageQuery('[[${pageVO.curr-1}]]')"><span>&laquo;</span></a>
+                    </li>
+
+                    <li th:each="page:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}"
+                        th:class="${page==pageVO.curr}?'active':''">
+                        <a href="javascript:void(0);" th:text="${page}"
+                           th:onclick="template.toPageQuery([[${page}]])"></a>
+                    </li>
+
+
+                    <li th:if="${pageVO.curr == pageVO.max}" class="disabled">
+                        <a href="javascript:void(0)"><span>&raquo;</span></a>
+                    </li>
+                    <li th:unless="${pageVO.curr == pageVO.max}">
+                        <a href="javascript:void(0)" th:onclick="template.toPageQuery('[[${pageVO.curr+1}]]')"><span>&raquo;</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

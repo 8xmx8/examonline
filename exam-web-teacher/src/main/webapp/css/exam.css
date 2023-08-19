@@ -1,0 +1,34 @@
+.fill-part-1,.fill-part-2,.fill-part-3{
+    min-width:800px;
+}
+
+.fill-part-2{
+    width:80% ;
+    margin:0 auto ;
+    background: #eeeeee;
+    overflow: hidden;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.fill-part-3{
+    width:80% ;
+    margin:0 auto ;
+    background: #eeeeee;
+    overflow: hidden;
+    padding:20px;
+    padding-bottom:50px;
+}
+
+.fill-part-3 .form-inline{
+    margin-bottom:30px;
+
+}
+
+.fill-part-3 .form-inline .form-control{
+    width:200px;
+}
+
+.fill-part-3 .form-inline div{
+    margin: 10px;
+}

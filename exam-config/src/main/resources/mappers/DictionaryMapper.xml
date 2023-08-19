@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.DictionaryMapper">
+    <resultMap id="dictionaryMap" type="com.yjy.examonline.domain.Dictionary">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , name, type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="dictionaryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_dictionary
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_dictionary
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Dictionary">
+        insert into t_dictionary (id, name, type)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Dictionary">
+        insert into t_dictionary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Dictionary">
+        update t_dictionary
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Dictionary">
+        update t_dictionary
+        set name = #{name,jdbcType=VARCHAR},
+            type = #{type,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findMajors" resultType="string">
+        select name
+        from t_dictionary
+        where type = '专业'
+        order by name
+    </select>
+    <select id="findCourses" resultType="string">
+        select name
+        from t_dictionary
+        where type = '课程'
+        order by name
+    </select>
+</mapper>

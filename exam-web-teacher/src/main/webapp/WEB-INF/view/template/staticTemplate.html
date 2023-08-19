@@ -1,0 +1,251 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="staticTemplate">
+
+        <div class="static-box">
+            <input type="hidden" id="static-form-id" th:value="${template!=null?template.id:''}" />
+            <div class="static-top-box form-inline search-box">
+                <div class="form-group">
+                    <label for="static-form-name">模板名称</label>
+                    <input type="text" class="form-control" id="static-form-name" th:value="${template!=null?template.name:''}">
+                </div>
+
+                <div class="form-group">
+                    <label for="static-form-course">关联课程</label>
+                    <input type="text" class="form-control" id="static-form-course" list="static-form-course-list" th:value="${template!=null?template.yl1:''}">
+                    <datalist id="static-form-course-list">
+                        <option th:each="course:${courses}" th:text="${course}"></option>
+                    </datalist>
+                </div>
+
+                <div class="form-group right">
+                    <button type="button" class="btn btn-primary" onclick="template.static.save()">
+                        <span class="glyphicon glyphicon-ok"></span> 保存
+                    </button>
+                </div>
+
+                <div class="form-group right" >
+                    <button type="button" class="btn btn-primary" onclick="template.static.cancelSave()">
+                        <span class="glyphicon glyphicon-remove"></span> 取消
+                    </button>
+                </div>
+            </div>
+
+            <div class="static-right-box">
+
+                <div class="right-part">
+                    <label>总分： <b style="font-size:2em;color: #666;" id="static-form-totalScore">0</b> 分</label>
+                </div>
+
+                <div class="right-part">
+                    <label>单选题</label>
+                    <div>
+                        <span>每题 <input id="static-form-question1-score" th:value="${template!=null?template.score1:2}" class="score-input" /> 分</span>
+                        <span class="right"><b id="static-question1-total">0</b> 分</span>
+                        <span class="right"><b id="static-question1-count">0</b> 题</span>
+                    </div>
+                </div>
+
+                <div class="right-part">
+                    <label>多选题</label>
+                    <div>
+                        <span>每题 <input id="static-form-question2-score" th:value="${template!=null?template.score2:2}" class="score-input" /> 分</span>
+                        <span class="right"><b id="static-question2-total">0</b> 分</span>
+                        <span class="right"><b id="static-question2-count">0</b> 题</span>
+                    </div>
+                </div>
+
+                <div class="right-part">
+                    <label>判断题</label>
+                    <div>
+                        <span>每题 <input id="static-form-question3-score" th:value="${template!=null?template.score3:2}" class="score-input" /> 分</span>
+                        <span class="right"><b id="static-question3-total">0</b> 分</span>
+                        <span class="right"><b id="static-question3-count">0</b> 题</span>
+                    </div>
+                </div>
+
+                <div class="right-part">
+                    <label>填空题</label>
+                    <div>
+                        <span>每题 <input id="static-form-question4-score" th:value="${template!=null?template.score4:2}" class="score-input" /> 分</span>
+                        <span class="right"><b id="static-question4-total">0</b> 分</span>
+                        <span class="right"><b id="static-question4-blank-count">0</b> 空</span>
+                        <span class="right"><b id="static-question4-count">0</b> 题</span>
+                    </div>
+                </div>
+
+                <div class="right-part">
+                    <label>综合题</label>
+                    <div>
+                        <span>每题 <input id="static-form-question5-score" class="score-input" th:value="${template!=null?template.score5:5}" /> 分</span>
+                        <span class="right"><b id="static-question5-total">0</b> 分</span>
+                        <span class="right"><b id="static-question5-count">0</b> 题</span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div id="static-left-box" class="static-left-box">
+
+                <div class="left-part form-inline search-box">
+
+                    <div class="form-group">
+                        <input type="checkbox" id="static-checkall-btn" onclick="template.static.checkAll(this)">
+                        <label for="static-checkall-btn">全选</label>
+                    </div>
+
+                    <div class="form-group">
+                        <a class="btn btn-link" onclick="template.static.removeQuestions()">
+                            <span class="glyphicon glyphicon-trash"></span> 删除
+                        </a>
+                    </div>
+
+                    <div class="form-group right">
+                        <button class="btn btn-primary btn-sm" onclick="template.static.toAddQuestion()">
+                            <span class="glyphicon glyphicon-plus"></span> 添加试题
+                        </button>
+                    </div>
+
+                    <div class="form-group right">
+                        <button class="btn btn-primary btn-sm" onclick="template.static.toImportQuestions()">
+                            <span class="glyphicon glyphicon-open"></span> 导入试题
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <th:block th:include="template/questionViewTemplate::questionView"></th:block>
+
+                <!-- demo
+                <div class="left-part">
+                    <div class="left-title form-inline">
+                        <div class="form-group">
+                            <label><input type="checkbox" /> 1.单选题</label>
+                        </div>
+                        <div class="form-group right">
+                            <button class="btn btn-link btn-sm">
+                                <span></span> 编辑
+                            </button>
+
+                            <button class="btn btn-link btn-sm">
+                                <span></span> 删除
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="left-subject">
+                        java的数据类型有几种
+                    </div>
+
+                    <ul class="left-options">
+                        <li>
+                            <span class="left-option active">A</span>
+                            <span class="left-option-text">2种</span>
+                        </li>
+
+                        <li>
+                            <span class="left-option">B</span>
+                            <span class="left-option-text">4种</span>
+                        </li>
+
+                        <li>
+                            <span class="left-option">C</span>
+                            <span class="left-option-text">6种</span>
+                        </li>
+
+                        <li>
+                            <span class="left-option">D</span>
+                            <span class="left-option-text">8种</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="left-part">
+                    <div class="left-title">
+                        <label><input type="checkbox" /> 2.判断题</label>
+                    </div>
+
+                    <div class="left-subject">
+                        java的数据类型有2种
+                    </div>
+
+                    <ul class="left-options">
+                        <li>
+                            <span class="left-option active">√正确</span>
+                        </li>
+
+                        <li>
+                            <span class="left-option">×错误</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="left-part">
+                    <div class="left-title">
+                        <label><input type="checkbox" /> 3.填空题</label>
+                    </div>
+
+                    <div class="left-subject">
+                        java的基本数据类型有【】种，其中整形有【】种
+                    </div>
+
+                    <ul class="left-options">
+                        <li>
+                            <span class="left-option active">填空1</span>
+                            <span class="left-option-text">8</span>
+                        </li>
+
+                        <li>
+                            <span class="left-option active">填空2</span>
+                            <span class="left-option-text">4</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="left-part">
+                    <div class="left-title">
+                        <label><input type="checkbox" /> 4.综合题</label>
+                    </div>
+
+                    <div class="left-subject">
+                        请简述java的数据类型
+                    </div>
+
+                    <ul class="left-options">
+                        <li>
+                            <span class="left-option active">答案解析</span>
+                            <span class="left-option-text">数据类型分2种，基本类型8中，引用类型...</span>
+                        </li>
+                    </ul>
+                </div>
+                -->
+
+                <div class="left-part bottom-part">
+                    <button class="btn btn-primary btn-sm" onclick="template.static.toImportQuestions()">
+                        <span class="glyphicon glyphicon-open"></span> 导入试题
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" onclick="template.static.toAddQuestion()">
+                        <span class="glyphicon glyphicon-plus"></span> 添加试题
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            $(function(){
+                //初始化，缓存考题的分数计算
+                template.static.calculate() ;
+
+                //初始化，单一分数的改变事件，每次改变都重新计算
+                $('.score-input').change(function(){
+                    template.static.calculate();
+                });
+            });
+        </script>
+    </div>
+</html>

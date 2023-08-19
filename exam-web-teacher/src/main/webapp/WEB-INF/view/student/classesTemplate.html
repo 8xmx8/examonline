@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="classesTemplate" id="classesTemplate">
+        <div style="height:240px;">
+            <table id="classGrid" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="5%"><input type="checkbox" onclick="student.classCheckAll()" /></th>
+                        <th width="10%">序号</th>
+                        <th width="40%">班级名称</th>
+                        <th width="15%">班级人数</th>
+                        <th width="30%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:if="${pageVO==null or pageVO.data==null or pageVO.data.size==0}">
+                        <tr><td align="center" colspan="5">没有任何班级记录</td></tr>
+                    </th:block>
+                    <th:block th:unless="${pageVO==null or pageVO.data==null or pageVO.data.size==0}">
+                        <tr th:each="classObj:${pageVO.data}">
+                            <td><input type="checkbox" th:value="${classObj.className}"/></td>
+                            <td th:text="${classObjStat.index+1}"></td>
+                            <td th:text="${classObj.className}"></td>
+                            <td th:text="${classObj.total}"></td>
+                            <td>
+                                <button class="btn btn-sm btn-success" th:onclick="student.toAdd([[${classObj.className}]])">
+                                    <span class="glyphicon glyphicon-plus"></span> 添加学生
+                                </button>
+
+                                <button class="btn btn-sm btn-danger" th:onclick="student.deleteClass([[${classObj.className}]])">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除班级
+                                </button>
+
+                                <button class="btn btn-sm btn-info" th:onclick="student.toShowClassDetail('[(${classObj.className})]')">
+                                    <span class="glyphicon glyphicon-list"></span> 班级详情
+                                </button>
+                            </td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+        <nav id="class-pagination">
+            <ul class="pagination">
+                <th:block th:if="${pageVO == null}">
+                    <li class="disabled">
+                        <a href="javascript:void(0)" ><span >&laquo;</span></a>
+                    </li>
+
+                    <li class="active">
+                        <a href="javascript:void(0)" ><span >1</span></a>
+                    </li>
+
+                    <li class="disabled">
+                        <a href="javascript:void(0)" ><span >&raquo;</span></a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${pageVO == null}">
+                    <li th:if="${pageVO.curr==1}" class="disabled">
+                        <a href="javascript:void(0)" ><span >&laquo;</span></a>
+                    </li>
+                    <li th:unless="${pageVO.curr==1}">
+                        <a href="javascript:void(0)" th:onclick="student.toPageClassQuery('[[${pageVO.curr-1}]]')"><span >&laquo;</span></a>
+                    </li>
+
+                    <li th:each="page:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}" th:class="${page==pageVO.curr}?'active':''">
+                        <a href="javascript:void(0);" th:text="${page}" th:onclick="student.toPageClassQuery('[[${page}]]')"></a>
+                    </li>
+
+
+                    <li th:if="${pageVO.curr == pageVO.max}" class="disabled">
+                        <a href="javascript:void(0)" ><span >&raquo;</span></a>
+                    </li>
+                    <li th:unless="${pageVO.curr == pageVO.max}">
+                        <a href="javascript:void(0)" th:onclick="student.toPageClassQuery('[[${pageVO.curr+1}]]')" ><span >&raquo;</span></a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+</html>

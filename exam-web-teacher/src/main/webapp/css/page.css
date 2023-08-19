@@ -1,0 +1,126 @@
+.container{
+    width:80%;
+    margin: 0 auto ;
+    padding:10px;
+    min-width:800px;
+    overflow: hidden;
+}
+
+/*.static-box{
+    width:80%;
+    margin: 0 auto;
+    min-width:800px;
+    padding:10px;
+    overflow: hidden;
+}*/
+
+.static-top-box{
+    height:60px;
+    background: #eee;
+    margin-bottom:10px;
+    padding:10px;
+}
+
+.static-right-box{
+    width:280px;
+    height:600px;
+    background: #eee;
+    float:right;
+    margin-left:10px;
+    padding:10px;
+}
+
+.static-left-box{
+    background: #eee;
+    overflow: hidden;
+    padding:10px;
+    min-height:600px;
+}
+
+
+
+.static-right-box label{
+    margin: 10px 0;
+}
+
+.right-part{
+    border-bottom:1px solid #aaa;
+    padding :10px 0 ;
+    margin:10px 0px;
+}
+
+.right-part input{
+    width:50px;
+    text-align: center;
+}
+
+.right-part span{
+    margin:0 5px;
+}
+
+
+.left-part{
+    padding:10px;
+    margin:10px;
+    border-bottom:1px solid #aaa ;
+}
+
+.bottom-part{
+    text-align: center;
+    border-bottom:0;
+}
+
+.left-title,.left-subject,.left-options,.left-options li{
+    margin:15px 0;
+}
+
+.left-option{
+    padding:5px 10px;
+    border:1px solid #09f;
+    margin-right:10px;
+    border-radius: 5px;
+    cursor: default;
+}
+
+.left-options li{
+    overflow: hidden;
+    clear: both;
+}
+
+.left-option , .left-option-text{
+    float:left;
+}
+
+.left-option-text{
+    line-height: 30px;
+}
+
+.left-option.active{
+    background: #09f;
+}
+
+
+.question-template .row{
+    margin:10px 0;
+}
+
+.remove-option-btn{
+    padding:4px 7px;
+    border-radius: 15px;
+}
+
+.question3 .question3-option{
+    font-size:20px;
+}
+
+#part-1,#part-2{
+    margin-bottom:30px;
+}
+
+
+.score-box{
+    width:50px;
+    height:30px;
+    text-align: center;
+
+}

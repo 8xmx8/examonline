@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新建考试模板 爱坤教育集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <link rel="stylesheet" type="text/css" href="css/template.css">
+
+    <script src="js/template.js"></script>
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#dynamic-pane" data-toggle="tab">动态模板</a></li>
+            <li><a href="#static-pane" data-toggle="tab">静态模板</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="dynamic-pane" th:include="~{template/dynamicTemplate::dynamicTemplate}">
+                动态
+            </div>
+            <div class="tab-pane" id="static-pane" th:include="~{template/staticTemplate::staticTemplate}">静态</div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.TeacherMapper">
+    <resultMap id="teacherMap" type="com.yjy.examonline.domain.Teacher">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="tname" jdbcType="VARCHAR" property="tname"/>
+        <result column="mnemonic_code" jdbcType="VARCHAR" property="mnemonicCode"/>
+        <result column="pass" jdbcType="VARCHAR" property="pass"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , tname, mnemonic_code, pass, yl1, yl2, yl3, yl4, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_teacher
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_teacher
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Teacher">
+        insert into t_teacher (id, tname, mnemonic_code,
+                               pass, yl1, yl2, yl3,
+                               yl4, create_time, update_time)
+        values (#{id,jdbcType=BIGINT}, #{tname,jdbcType=VARCHAR}, #{mnemonicCode,jdbcType=VARCHAR},
+                #{pass,jdbcType=VARCHAR}, #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR},
+                #{yl4,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Teacher">
+        insert into t_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tname != null">
+                tname,
+            </if>
+            <if test="mnemonicCode != null">
+                mnemonic_code,
+            </if>
+            <if test="pass != null">
+                pass,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="tname != null">
+                #{tname,jdbcType=VARCHAR},
+            </if>
+            <if test="mnemonicCode != null">
+                #{mnemonicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pass != null">
+                #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Teacher">
+        update t_teacher
+        <set>
+            <if test="tname != null">
+                tname = #{tname,jdbcType=VARCHAR},
+            </if>
+            <if test="mnemonicCode != null">
+                mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pass != null">
+                pass = #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+
+            update_time=now(),
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Teacher">
+        update t_teacher
+        set tname         = #{tname,jdbcType=VARCHAR},
+            mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+            pass          = #{pass,jdbcType=VARCHAR},
+            yl1           = #{yl1,jdbcType=VARCHAR},
+            yl2           = #{yl2,jdbcType=VARCHAR},
+            yl3           = #{yl3,jdbcType=VARCHAR},
+            yl4           = #{yl4,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findByName" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_teacher
+        where
+        tname = #{tname} or mnemonic_code=#{tname};
+    </select>
+
+    <update id="updatePwd">
+        update t_teacher
+        set pass=#{pass},
+            update_time=now()
+        where id = #{id};
+    </update>
+
+    <select id="total" resultType="long">
+        select
+        count(*)
+        from
+        t_teacher
+        <where>
+            <if test="tname != null and tname != ''">
+                and tname like concat('%',#{tname},'%') or mnemonic_code like concat('%',#{tname},'%')
+            </if>
+        </where>
+    </select>
+    <select id="find" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_teacher
+        <where>
+            <if test="tname != null and tname != ''">
+                and tname like concat('%',#{tname},'%') or mnemonic_code like concat('%',#{tname},'%')
+            </if>
+        </where>
+        order by create_time desc
+        limit #{start},#{length}
+    </select>
+
+    <select id="findAll" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_teacher
+        order by tname asc;
+    </select>
+
+    <select id="findByShareFrom" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_teacher
+        where id in ( select tid from t_template where id in(
+        select template_id from t_template_teacher where teacher_id = #{id })
+        )
+    </select>
+    <select id="findByShareTo" resultMap="teacherMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_teacher
+        where id in (select teacher_id from t_template_teacher where template_id=#{templateId})
+    </select>
+</mapper>

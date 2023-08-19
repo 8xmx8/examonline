@@ -1,0 +1,112 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+    <div id="question-template" class="container-fluid question-template">
+        <!-- 编辑时存储题号 -->
+        <input type="hidden" id="static-form-question-index"  />
+
+        <div class="alert alert-success" role="alert">
+            <b>填空题说明：</b>手动输入'【】'符号表示一个填空选项，也可以使用填空按钮增加填空选项
+        </div>
+        <div class="row">
+            <label for="static-form-question-level" class="col-sm-2 control-label">试题等级</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="static-form-question-level">
+                    <option>简单</option>
+                    <option>中等</option>
+                    <option>困难</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <label for="static-form-question-type" class="col-sm-2 control-label">试题类型</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="static-form-question-type" onchange="template.static.changeQuestion()">
+                    <option>单选题</option>
+                    <option>多选题</option>
+                    <option>判断题</option>
+                    <option>填空题</option>
+                    <option>综合题</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-2 control-label">题干</label>
+            <div class="col-sm-9">
+               <div id="static-question-subject"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- 提供了不同题型的选项内容（单选多选-选项，判断-选项，填空-选项，综合题-答案 -->
+    <div id="question-clone-box" style="display:none">
+        <!-- 选择题答案选项 -->
+        <div class="row question1">
+            <div class="col-sm-2">
+                <label class="question1-option">
+                    <input type="radio" name="question1-option" /> <span>A</span>选项
+                </label>
+            </div>
+            <div class="col-sm-9">
+                <div class="question1-option-content"></div>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)" class="btn btn-danger remove-option-btn" onclick="template.static.removeOption1(this)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 多选择题答案选项 -->
+        <div class="row question2">
+            <div class="col-sm-2">
+                <label class="question2-option">
+                    <input type="checkbox" name="question2-option" /> <span>A</span>选项
+                </label>
+            </div>
+            <div class="col-sm-9">
+                <div class="question2-option-content"></div>
+            </div>
+            <div class="col-sm-1">
+                <a href="javascript:void(0)" class="btn btn-danger remove-option-btn" onclick="template.static.removeOption2(this)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 判断题答案选项 -->
+        <div class="row question3">
+            <div class="col-sm-2"><label>试题答案</label></div>
+            <div class="col-sm-2">
+                <label class="question3-option">
+                    <input type="radio" name="question3-option" value="0" checked style="width:15px;height:15px;" /> <span style="color:green;">√正确</span>
+                </label>
+            </div>
+            <div class="col-sm-2">
+                <label class="question3-option">
+                    <input type="radio" name="question3-option" value="1" style="width:15px;height:15px;" /> <span style="color:red;">×错误</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 填空题答案选项 -->
+        <div class="row question4">
+            <div class="col-sm-2">
+                <label class="question4-option">填空<span>1</span></label>
+            </div>
+            <div class="col-sm-3">
+                <input name="question4-option" class="question4-option-content form-control" />
+            </div>
+        </div>
+
+        <!-- 综合答案选项 -->
+        <div class="row question5">
+            <div class="col-sm-2"><label>试题答案</label></div>
+            <div class="col-sm-9">
+                <div class="question5-option-content"></div>
+            </div>
+        </div>
+    </div>
+</html>

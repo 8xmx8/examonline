@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <input type="hidden" id="template-id" />
+    <div class="form-inline search-box">
+        <div class="form-group">
+            <label for="search-tname">名称</label>
+            <input type="text" class="form-control" id="search-tname">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" onclick="teacher.toTeacherQuery()">
+                <span class="glyphicon glyphicon-zoom-in"></span> 查询
+            </button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" onclick="teacher.toClearTeacherQuery()">
+                <span class="glyphicon glyphicon-zoom-out"></span> 清空查询
+            </button>
+        </div>
+    </div>
+
+    <!-- 相当于一个独立的模板，可以被独立访问和使用 -->
+    <div th:replace="teacher/teacher::#pageTemplate"></div>
+
+</html>

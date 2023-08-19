@@ -1,0 +1,167 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>填充考试信息 爱坤集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+    <link rel="stylesheet" type="text/css" href="css/exam.css"/>
+    <link rel="stylesheet" type="text/css" href="css/template.css"/>
+    <script src="js/exam.js"></script>
+    <script src="js/student.js"></script>
+    <script src="js/template.js"></script>
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <input type="hidden" id="fill-form-id" th:value="${exam.id}"/>
+
+    <div id="fill-part-1" class="fill-part-1 alert alert-info">
+        <b id="fill-exam-name" th:text="${exam.name}"></b>
+
+        <span class="right">
+                <a href="javascript:exam.toEdit()">编辑</a>
+                |
+                <a href="javascript:void(0)" onclick="history.go(-1)">返回</a>
+            </span>
+    </div>
+
+    <div id="fill-part-2" class="fill-part-2">
+        <button class="btn btn-primary right" onclick="exam.toFillSave()">
+            <span></span> 保存
+        </button>
+    </div>
+
+    <div id="fill-part-3" class="fill-part-3">
+
+        <div class="form-inline">
+
+            <label>关联模板：</label>
+            <input type="hidden" id="fill-form-template-id" th:value="${template!=null?template.id:''}"/>
+            <input class="form-control" readonly="readonly" id="fill-form-template-name"
+                   th:value="${template!=null?template.name:''}" style="width:250px;"/>
+            <a href="javascript:exam.toSelectTemplate()" class="btn btn-link">关联模板</a>
+            <a href="javascript:exam.toShowTemplateDetail()" class="btn btn-link">模板详情</a>
+
+        </div>
+
+        <div class="form-inline">
+            <label>填写考试区间：<input type="radio" name="fill-form-time" value="1" checked
+                                       onclick="exam.selectTime(1)"/></label>
+            <div>
+                <label for="fill-form-start-time">开始时间：</label>
+                <input type="datetime-local" class="form-control" id="fill-form-start-time"
+                       th:value="${exam.startTime==null?'':#dates.format(exam.startTime,'yyyy-MM-dd')+'T'+#dates.format(exam.startTime,'HH:mm')}"
+                       style="width:250px;"/>
+            </div>
+            <div>
+                <label for="fill-form-end-time">结束时间：</label>
+                <input type="datetime-local" class="form-control" id="fill-form-end-time"
+                       th:value="${exam.endTime==null?'':#dates.format(exam.endTime,'yyyy-MM-dd')+'T'+#dates.format(exam.endTime,'HH:mm')}"
+                       style="width:250px;"/>
+            </div>
+        </div>
+
+        <div class="form-inline">
+            <label>填写考试时长：<input type="radio" name="fill-form-time" value="2"
+                                       onclick="exam.selectTime(2)"/></label>
+            <div>
+                <label for="fill-form-duration">考试时长：</label>
+                <select id="fill-form-duration" class="form-control" disabled style="width:250px;">
+                    <option value="30">30分钟</option>
+                    <option value="45">45分钟</option>
+                    <option value="60">60分钟</option>
+                    <option value="90">90分钟</option>
+                    <option value="120">120分钟</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <div class="form-inline form-search">
+                <div class="form-group">
+                    <button class="btn" onclick="exam.toSelectClasses()">
+                        <span></span> 选择班级
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn" onclick="exam.toCreateClass()">
+                        <span></span> 自定义班级
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn" onclick="exam.toImpotClasses()">
+                        <span></span> 导入班级
+                    </button>
+                </div>
+            </div>
+
+            <table id="refClassGrid" class="table">
+                <thead>
+                <tr>
+                    <th width="6%"><input type="checkbox"/></th>
+                    <th width="10%">序号</th>
+                    <th width="25%">班级名称</th>
+                    <th width="15%">班级人数</th>
+                    <th width="15%">选择人数</th>
+                    <th width="29%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${refClasses == null or refClasses.size() == 0}">
+                    <tr>
+                        <td colspan="6" align="center">没有绑定任何班级信息</td>
+                    </tr>
+                </th:block>
+                <th:block th:unless="${refClasses == null or refClasses.size() == 0}">
+                    <tr th:each="refClass:${refClasses}">
+                        <td><input type="checkbox" th:value="${refClass.className}"/></td>
+                        <td th:text="${refClassStat.index + 1}"></td>
+                        <td th:text="${refClass.className}"></td>
+                        <td th:text="${refClass.total}"></td>
+                        <td th:text="${refClass.refTotal}"></td>
+                        <td>
+                            <button class="btn" th:onclick="exam.removeRefClass([[${refClass.className}]])">
+                                <span></span> 移除班级
+                            </button>
+
+
+                            <button class="btn" th:onclick="exam.toAdjustStudents([[${refClass.className}]])">
+                                <span></span> 调整学生
+                            </button>
+
+
+                            <button th:if="${refClass.custom == 'Y'}" class="btn"
+                                    th:onclick="exam.toImportStudents([[${refClass.className}]])">
+                                <span></span> 导入学生
+                            </button>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            var init_duration = '[[${exam.duration}]]';
+            if (init_duration && init_duration != '') {
+                $('input[name="fill-form-time"]:eq(1)').click();
+                $('#fill-form-duration').val(init_duration);
+            }
+        </script>
+    </div>
+
+
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

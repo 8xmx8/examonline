@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <!-- 开启注解扫描，使注解生效 -->
+    <context:component-scan base-package="com.yjy.examonline.controller"/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <!-- 配置文件上传解析器 文件上传生效 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="5000000"/>
+        <property name="maxUploadSizePerFile" value="1000000"/>
+    </bean>
+
+    <!-- 配置视图解析器，使thymeleaf生效 -->
+    <!-- 模板处理器，指定如何处理thymeleaf模板 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false"/><!-- debug方式禁调页面缓存 -->
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- 声明模板引擎 -->
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <!-- 配置spring使用的视图解析器 spring转发处理时，就会使用这个视图解析器 -->
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="order" value="1"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <mvc:default-servlet-handler/>
+
+    <!--
+    <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    -->
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="basename" value="message"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <!--
+        国际化语言环境的存储对象，每次拦截器获得的语言都会存入对象，
+        如果某次请求没有获得语言，就会存储对象获取
+    -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="zn_CN"/>
+    </bean>
+
+    <!--
+        <a href="xxxxx?lang=zh_CN" >中文</a>
+        此次请求传递了一个语言参数，希望接下来所有的请求，都使用这种语言。
+        而接下来的请求不需要每次都传递这个参数
+        所以还需要将这次传递的语言参数保存起来 （session，cookie）
+     -->
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/common/login.html"/>
+            <mvc:exclude-mapping path="/common/login"/>
+            <mvc:exclude-mapping path="/common/exit"/>
+            <mvc:exclude-mapping path="/common/timeout.html"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <bean id="loginInterceptor" class="com.yjy.examonline.common.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="dateFormatter"></ref>
+            </set>
+        </property>
+    </bean>
+
+</beans>

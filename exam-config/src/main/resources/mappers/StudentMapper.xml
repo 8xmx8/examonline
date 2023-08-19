@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.StudentMapper">
+    <resultMap id="studentMap" type="com.yjy.examonline.domain.Student">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="sname" jdbcType="VARCHAR" property="sname"/>
+        <result column="mnemonic_code" jdbcType="VARCHAR" property="mnemonicCode"/>
+        <result column="pass" jdbcType="VARCHAR" property="pass"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="class_no" jdbcType="VARCHAR" property="classNo"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , code, sname, mnemonic_code, pass, grade, major, class_no, yl1, yl2, yl3, yl4,
+    create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="studentMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_student
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_student
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Student">
+        insert into t_student (id, code, sname,
+                               mnemonic_code, pass, grade,
+                               major, class_no, yl1,
+                               yl2, yl3, yl4, create_time,
+                               update_time)
+        values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR},
+                #{mnemonicCode,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER},
+                #{major,jdbcType=VARCHAR}, #{classNo,jdbcType=VARCHAR}, #{yl1,jdbcType=VARCHAR},
+                #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR},
+                now(),
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Student">
+        insert into t_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="sname != null">
+                sname,
+            </if>
+            <if test="mnemonicCode != null">
+                mnemonic_code,
+            </if>
+            <if test="pass != null">
+                pass,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="major != null">
+                major,
+            </if>
+            <if test="classNo != null">
+                class_no,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="sname != null">
+                #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="mnemonicCode != null">
+                #{mnemonicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pass != null">
+                #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="major != null">
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="classNo != null">
+                #{classNo,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Student">
+        update t_student
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="sname != null">
+                sname = #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="mnemonicCode != null">
+                mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pass != null">
+                pass = #{pass,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="classNo != null">
+                class_no = #{classNo,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Student">
+        update t_student
+        set code          = #{code,jdbcType=VARCHAR},
+            sname         = #{sname,jdbcType=VARCHAR},
+            mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+            pass          = #{pass,jdbcType=VARCHAR},
+            grade         = #{grade,jdbcType=INTEGER},
+            major         = #{major,jdbcType=VARCHAR},
+            class_no      = #{classNo,jdbcType=VARCHAR},
+            yl1           = #{yl1,jdbcType=VARCHAR},
+            yl2           = #{yl2,jdbcType=VARCHAR},
+            yl3           = #{yl3,jdbcType=VARCHAR},
+            yl4           = #{yl4,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findClasses" resultType="map" parameterType="map">
+        select
+        concat(grade,'-',major,'-',class_no) className ,
+        count(*) total
+        from
+        t_student
+        <where>
+            <if test="grade != null and grade != ''">
+                and grade = #{grade}
+            </if>
+            <if test="major != null and major != ''">
+                and major like concat('%',#{major},'%')
+            </if>
+            <if test="classNo != null and classNo != ''">
+                and class_no like concat(#{classNo},'%')
+            </if>
+        </where>
+        group by grade , major , class_no
+        order by grade desc,major asc,class_no asc
+    </select>
+
+    <select id="findStudents" resultMap="studentMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_student
+        <where>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="sname != null and sname != ''">
+                and (sname =#{sname} or mnemonic_code =#{sname})
+            </if>
+            <if test="className != null and className != ''">
+                and concat(grade,'-',major,'-',class_no)=#{className}
+            </if>
+        </where>
+        order by code
+    </select>
+    <!--
+    教师批量删除 ： ids="11,2,3,4,5,6"
+    classNames '2020-软件-1班,2020-软件-2班,2020-软件-3班'
+    concat(...) '%2020-软件-1班%'
+ -->
+    <delete id="deleteByClasses">
+        delete
+        from t_student
+        where #{classNames} like concat('%', grade, '-', major, '-', class_no, '%')
+    </delete>
+
+    <!-- 会出现sql注入问题-->
+    <delete id="deletes">
+        delete
+        from t_student
+        where id in (${ids});
+    </delete>
+
+    <select id="findStudentsByClasses" resultMap="studentMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_student
+        <where>
+            <if test="grade != null and grade != ''">
+                and grade = #{grade}
+            </if>
+            <if test="major != null and major != ''">
+                and major like concat('%',#{major},'%')
+            </if>
+            <if test="classNo != null and classNo != ''">
+                and class_no like concat(#{classNo},'%')
+            </if>
+            <if test="classNames != null and classNames != ''">
+                and #{className} like concat('%',grade,'-',major,'-',class_no,'%')
+            </if>
+        </where>
+        order by major asc , grade desc ,class_no asc, code asc
+    </select>
+    <select id="findStudentIdsExcludeId" resultType="string">
+        select group_concat(id)
+        from t_student
+        where concat(grade, '-', major, '-', class_no) = #{className}
+          and id != #{id}
+    </select>
+
+
+    <select id="findClassesByNames" resultType="map">
+        select concat(grade, '-', major, '-', class_no) className,
+               count(*)                                 total
+        from t_student
+        where #{classNames} like concat('%', grade, '-', major, '-', class_no, '%')
+        group by className
+    </select>
+
+
+    <select id="findExistStudent" resultMap="studentMap">
+        select
+        id,code,sname
+        from
+        t_student
+        where
+        concat(code,'-',sname) in
+        <foreach collection="list" item="stu" open="(" close=")" separator=",">
+            concat(#{stu.code},'-',#{stu.sname})
+        </foreach>
+    </select>
+
+    <select id="classCountByName" resultType="int">
+        select count(*)
+        from t_student
+        where concat(grade, '-', major, '-', class_no) = #{className}
+    </select>
+
+
+    <select id="findBindStudents" resultType="map">
+        select
+        id sid,
+        sname ,
+        concat(grade,'-',major,'-',class_no) className
+        from
+        t_student
+        where
+        <choose>
+            <when test="array[0] == 'ALL'">
+                concat(grade,'-',major,'-',class_no) = #{className}
+            </when>
+            <otherwise>
+                id in
+                <foreach collection="array" item="sid" open="(" close=")" separator=",">
+                    #{sid}
+                </foreach>
+            </otherwise>
+        </choose>
+
+    </select>
+
+
+    <select id="findUnbindStudents" resultType="map">
+        select
+        id sid,
+        sname,
+        #{className} className
+        from
+        t_student
+        where
+        concat(grade,'-',major,'-',class_no) = #{className}
+        and id not in
+        <foreach collection="array" item="sid" open="(" close=")" separator=",">
+            #{sid}
+        </foreach>
+    </select>
+
+
+    <select id="findClassAllStudentIds" resultType="string">
+        select group_concat(id)
+        from t_student
+        where concat(grade, '-', major, '-', class_no) = #{className}
+    </select>
+
+    <select id="findByExam" resultMap="studentMap">
+        select id,
+               code,
+               sname
+        from t_student s
+                 inner join t_student_exam se on s.id = se.student_id and exam_id = #{examId}
+    </select>
+
+
+    <select id="findByName" resultMap="studentMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_student
+        where
+        sname = #{sname} or mnemonic_code = #{sname} or code = #{sname}
+    </select>
+
+    <update id="updatePwd">
+        update t_student
+        set pass=#{pass},
+            update_time=now()
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="questionView">
+    <!-- 只对考题导入有效,每次利用这个模板，都会有这个隐藏框
+         所以通过找指定class的最后一个last来获得msg信息
+    -->
+    <input type="hidden" class="static-question-import-msg" th:value="${msg}"/>
+
+    <div class="left-part" th:each="question:${questions}">
+        <div class="left-title form-inline">
+            <div class="form-group">
+                <label><input type="checkbox" th:value="${question.index}"/> <span class="static-question-index"
+                                                                                   th:text="${question.index}"></span>.<span
+                        class="static-question-type" th:text="${question.type}"></span></label>
+            </div>
+            <div class="form-group right">
+                <button class="btn btn-link btn-sm" onclick="template.static.toEditQuestion(this)">
+                    <span></span> 编辑
+                </button>
+
+                <button class="btn btn-link btn-sm" onclick="template.static.removeQuestion(this)">
+                    <span></span> 删除
+                </button>
+            </div>
+
+        </div>
+
+        <div class="left-subject" th:utext="${question.subject}">
+
+        </div>
+
+        <ul class="left-options">
+            <li th:if="${question.type=='单选题'}" th:each="option:${question.optionList}">
+                <div th:class="'left-option '+${#arrays.contains(question.answerList,optionStat.index+'')?'active':''}"
+                     th:text="${T(com.yjy.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></div>
+                <div class="left-option-text" th:utext="${option}"></div>
+            </li>
+
+            <li th:if="${question.type=='多选题'}" th:each="option:${question.optionList}">
+                <div th:class="'left-option '+${#arrays.contains(question.answerList,optionStat.index+'')?'active':''}"
+                     th:text="${T(com.yjy.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></div>
+                <div class="left-option-text" th:utext="${option}"></div>
+            </li>
+
+            <th:block th:if="${question.type=='判断题'}">
+                <li>
+                    <div th:class="'left-option ' + ${#arrays.contains(question.answerList,'0')?'active':''}">√正确
+                    </div>
+                </li>
+                <li>
+                    <div th:class="'left-option ' + ${#arrays.contains(question.answerList,'1')?'active':''}">×错误
+                    </div>
+                </li>
+            </th:block>
+
+            <li th:if="${question.type=='填空题'}" th:each="answer:${question.answerList}">
+                <div class="left-option active">填空[[${answerStat.index+1}]]</div>
+                <div class="left-option-text" th:text="${answer}">[[${answer]]</div>
+            </li>
+
+            <li th:if="${question.type=='综合题'}">
+                <div class="left-option active">答案解析</div>
+                <div class="left-option-text" th:utext="${question.answerList.get(0)}"></div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+</html>

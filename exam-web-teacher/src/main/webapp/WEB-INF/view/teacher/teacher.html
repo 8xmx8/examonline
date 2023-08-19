@@ -1,0 +1,154 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师管理 爱坤教育集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <script src="js/teacher.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+
+    <div class="form-inline search-box">
+        <div class="form-group">
+            <label for="search-tname">名称</label>
+            <input type="text" class="form-control" id="search-tname">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" onclick="teacher.toTeacherQuery()">
+                <span class="glyphicon glyphicon-zoom-in"></span> 查询
+            </button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" onclick="teacher.toClearTeacherQuery()">
+                <span class="glyphicon glyphicon-zoom-out"></span> 清空查询
+            </button>
+        </div>
+
+
+        <div class="form-group right">
+            <button type="button" class="btn btn-default" onclick="teacher.toAdd()">
+                <span class="glyphicon glyphicon-plus"></span> 新建教师
+            </button>
+        </div>
+        <div class="form-group right">
+            <button type="button" class="btn btn-default" onclick="teacher.toDeleteAll()">
+                <span class="glyphicon glyphicon-trash"></span> 批量删除
+            </button>
+        </div>
+        <div class="form-group right">
+            <button type="button" class="btn btn-default" onclick="teacher.toImports()">
+                <span class="glyphicon glyphicon-cloud-upload"></span> 批量导入
+            </button>
+        </div>
+        <div class="form-group right">
+            <a href="teacher/exports" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-log-out"></span> 批量导出
+            </a>
+        </div>
+    </div>
+
+    <!-- 相当于一个独立的模板，可以被独立访问和使用 -->
+    <div id="pageTemplate">
+        <table id="teacherGrid" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th width="10%"><input type="checkbox" onclick="teacher.toCheckAll()"/></th>
+                <th width="10%">序号</th>
+                <th width="20%">教师名称</th>
+                <th width="15%">助记码</th>
+                <th width="20%">创建时间</th>
+                <th width="25%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${pageVO.data == null || pageVO.data.size() == 0 }">
+                <tr>
+                    <td align="center" colspan="6">没有任何查询结果</td>
+                </tr>
+            </th:block>
+            <th:block th:unless="${pageVO.data == null || pageVO.data.size() == 0 }">
+                <tr th:each="teacher:${pageVO.data}">
+                    <td><input type="checkbox" th:value="${teacher.id}"/></td>
+                    <td th:text="${teacherStat.index+1}"></td>
+                    <td th:text="${teacher.tname}"></td>
+                    <td th:text="${teacher.mnemonicCode}"></td>
+                    <td th:text="${#dates.format(teacher.createTime,'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" th:onclick="teacher.toEdit('[[${teacher.id}]]')">
+                            <span class="glyphicon glyphicon-pencil"></span> 编辑
+                        </button>
+
+                        <button class="btn btn-danger btn-sm" th:onclick="teacher.toDeleteOne('[[${teacher.id}]]')">
+                            <span class="glyphicon glyphicon-trash"></span> 删除
+                        </button>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination">
+
+                <li th:if="${pageVO.curr==1}" class="disabled">
+                    <a href="javascript:void(0)"><span>&laquo;</span></a>
+                </li>
+                <li th:unless="${pageVO.curr==1}">
+                    <a href="javascript:void(0)" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr-1}]]')"><span>&laquo;</span></a>
+                </li>
+
+                <li th:each="page:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}"
+                    th:class="${page==pageVO.curr}?'active':''">
+                    <a href="javascript:void(0);" th:text="${page}"
+                       th:onclick="teacher.toPageTeacherQuery('[[${page}]]')"></a>
+                </li>
+
+
+                <li th:if="${pageVO.curr == pageVO.max}" class="disabled">
+                    <a href="javascript:void(0)"><span>&raquo;</span></a>
+                </li>
+                <li th:unless="${pageVO.curr == pageVO.max}">
+                    <a href="javascript:void(0)" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr+1}]]')"><span>&raquo;</span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <!-- 一个隐藏的窗口 接下来可以给新建教师,编辑老师，导入老师信息使用 -->
+    <div class="modal fade" id="teacher-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title" id="teacher-modal-title">...</h4>
+                </div>
+
+                <div class="modal-body" id="teacher-modal-body">
+                    ...
+                </div>
+
+                <div class="modal-footer" id="teacher-modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="teacher-modal-submit">提交</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="common::footer"></div>
+</body>
+</html>

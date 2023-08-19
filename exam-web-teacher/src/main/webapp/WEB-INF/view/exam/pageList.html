@@ -1,0 +1,108 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试卷列表 爱坤集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <script src="js/page.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <input type="hidden" id="exam-id" th:value="${examId}"/>
+    <div class="alert alert-info" role="alert">
+        <span th:text="${exam.name}"></span>
+        <span class="right">
+            <button id="exam-submit-btn" class="btn btn-primary btn-sm" onclick="page.toSubmit()">
+                <span class="glyphicon glyphicon-ok"></span> 提交
+            </button>
+            <button class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-ok"></span> 导出成绩
+            </button>
+        </span>
+    </div>
+    <div class="page-list-part-1">
+        <table id="classGrid" class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>班级名称</th>
+                <th>考试人数</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cls:${classes}">
+                <td th:text="${clsStat.index+1}"></td>
+                <td th:text="${cls.className}"></td>
+                <td th:text="${cls.count}"></td>
+                <td>
+                    <button class="btn btn-sm" th:onclick="page.toStudentList([[${cls.className}]])">
+                        <span></span> 学生列表
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-list-part-2">
+
+        <table id="studentGrid" class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>班级</th>
+                <th>分数</th>
+                <th>考试状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student:${students}">
+                <td th:text="${studentStat.index+1}"></td>
+                <td th:text="${student.code}"></td>
+                <td th:text="${student.sname}"></td>
+                <td th:text="${student.className}"></td>
+                <td th:text="${student.score==null?0:student.score}"></td>
+                <td>
+                    <select th:onchange="page.changeStudentStatus(this,[[${student.studentId}]])">
+                        <option th:selected="${student.status=='已完成'}">已完成</option>
+                        <option th:selected="${student.status=='缺考'}">缺考</option>
+                        <option th:selected="${student.status=='作弊'}">作弊</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="btn btn-sm"
+                            th:onclick="page.toReview([[${student.studentId}]],[[${student.sname}]])">
+                        <span></span> 批阅考卷
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var submitStatus = '[[${exam.yl1}]]';
+        if (submitStatus == '提交') {
+            page.setExamSubmitStatus();
+        }
+    </script>
+
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

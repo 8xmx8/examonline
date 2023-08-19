@@ -1,0 +1,68 @@
+ul,li{
+    list-style:none;
+    margin: 0;
+    padding:0;
+}
+
+
+.header-box{
+    height:60px;
+    background:linear-gradient(to right,#eee 0% , #ccc 100%) ;
+    padding:0 10px;
+}
+
+.header-box .logo-box{
+    font-size:20px;
+    line-height: 60px;
+    height:60px;
+    position: absolute;
+    padding-left:100px;
+}
+
+.header-box .welcome-box{
+    float:right;
+    height:60px;
+    line-height: 60px;
+}
+
+.header-box .welcome-box .dropdown-menu{
+    left:-100px;
+}
+
+.header-box .glyphicon{
+    margin-right:10px;
+}
+
+.footer-box{
+    position: fixed;
+    bottom:0;
+    width:100%;
+    text-align:center;
+    background:#eee;
+    height:30px;
+    line-height: 30px;
+}
+
+.content-box{
+    padding :0 10px;
+    padding-bottom:30px;
+}
+
+.content-box .search-box{
+    margin-bottom:10px;
+}
+.content-box .search-box .form-group{
+    margin-right:10px;
+}
+
+.right{
+    float:right ;
+}
+
+.form-sm .form-control{
+    width:120px;
+}
+
+.label{
+    cursor: default;
+}

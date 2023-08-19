@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="questionView">
+        <!-- 只对考题导入有效,每次利用这个模板，都会有这个隐藏框
+             所以通过找指定class的最后一个last来获得msg信息
+        -->
+        <input type="hidden" class="static-question-import-msg" th:value="${msg}" />
+        <div class="left-part" th:each="question:${questionVOS}">
+            <div class="left-title form-inline">
+                <div class="form-group">
+                    <label> <span class="static-question-index" th:text="${question.index}"></span>.<span class="static-question-type" th:text="${question.type}"></span></label>
+                </div>
+                <div class="form-group right">
+                    <input th:class="${'score-box '+(question.type=='填空题'?' score-box-4':(question.type=='综合题'?' score-box-5':''))} " th:value="${question.endScore}"  th:disabled="${question.type!='填空题' && question.type!='综合题'}" onfocus="this.select()" onchange="page.review()" />
+                    <a th:unless="${question.type!='填空题' && question.type!='综合题'}" th:href="|javascript:page.toStartReview(${questionStat.index})|">
+                        <span></span> 批阅
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="left-subject" th:utext="${question.subject}">
+
+            </div>
+
+            <ul class="left-options">
+                <li  th:if="${question.type=='单选题'}" th:each="option:${question.optionList}">
+                    <div th:class="'left-option '+${#arrays.contains(question.answerList,optionStat.index+'')?'active':''}"
+                         th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></div>
+                    <div class="left-option-text" th:utext="${option}"></div>
+                </li>
+                <li th:if="${question.type=='单选题'}">
+                    <div class="left-option" >学生答案：</div>
+                    <th:block th:if="${question.endAnswerList == null}">
+                        <div class="left-option-text">无</div>
+                    </th:block>
+                    <th:block th:unless="${question.endAnswerList == null}">
+                        <div class="left-option-text" th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(question.endAnswerList.get(0))}"></div>
+                    </th:block>
+                </li>
+
+
+
+
+                <li th:if="${question.type=='多选题'}" th:each="option:${question.optionList}">
+                    <div th:class="'left-option '+${#arrays.contains(question.answerList,optionStat.index+'')?'active':''}"
+                         th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(optionStat.index)}"></div>
+                    <div class="left-option-text" th:utext="${option}"></div>
+                </li>
+                <li th:if="${question.type=='多选题'}">
+                    <div class="left-option" >学生答案：</div>
+                    <th:block th:if="${question.endAnswerList == null}">
+                        <div class="left-option-text">无</div>
+                    </th:block>
+                    <th:block th:unless="${question.endAnswerList == null}">
+                        <div class="left-option-text" >
+                            <span th:each="an:${question.endAnswerList}" th:text="${T(com.duyi.examonline.common.CommonData).OPTION_STR.charAt(an)}+' '"></span>
+                        </div>
+                    </th:block>
+                </li>
+
+                <th:block th:if="${question.type=='判断题'}">
+                    <li>
+                        <div th:class="'left-option ' + ${#arrays.contains(question.answerList,'0')?'active':''}">√正确</div>
+                    </li>
+                    <li>
+                        <div th:class="'left-option ' + ${#arrays.contains(question.answerList,'1')?'active':''}">×错误</div>
+                    </li>
+                </th:block>
+                <li th:if="${question.type=='判断题'}">
+                    <div class="left-option" >学生答案：</div>
+                    <th:block th:if="${question.endAnswerList == null}">
+                        <div class="left-option-text">无</div>
+                    </th:block>
+                    <th:block th:unless="${question.endAnswerList == null}">
+                        <div class="left-option-text" th:text="${question.endAnswerList.get(0)=='0'?'正确':'错误'}"></div>
+                    </th:block>
+                </li>
+
+
+
+
+
+                <li th:if="${question.type=='填空题'}" th:each="answer:${question.answerList}">
+                    <div class="left-option active" >填空[[${answerStat.index+1}]]</div>
+                    <div class="left-option-text" th:text="${answer}">[[${answer]]</div>
+                </li>
+                <li th:if="${question.type=='填空题'}">
+                    <div class="left-option" >学生答案：</div>
+                    <th:block th:if="${question.endAnswerList == null}">
+                        <div class="left-option-text">无</div>
+                    </th:block>
+                    <th:block th:unless="${question.endAnswerList == null}">
+                        <div class="left-option-text" >
+                            <div th:each="an:${question.endAnswerList}" th:text="${an}"></div>
+                        </div>
+                    </th:block>
+                </li>
+                <li th:if="${question.type=='填空题'}" style="display:none">
+                    <div class="review-hidden-box review-hidden-box-4" th:utext="${question.review}">无</div>
+                </li>
+
+
+
+
+                <li th:if="${question.type=='综合题'}">
+                    <div class="left-option active">答案解析</div>
+                    <div class="left-option-text" th:utext="${question.answerList.get(0)}"></div>
+                </li>
+                <li th:if="${question.type=='综合题'}">
+                    <div class="left-option" >学生答案：</div>
+                    <th:block th:if="${question.endAnswerList == null}">
+                        <div class="left-option-text">无</div>
+                    </th:block>
+                    <th:block th:unless="${question.endAnswerList == null}">
+                        <div class="left-option-text" th:utext="${question.endAnswerList.get(0)}"></div>
+                    </th:block>
+                </li>
+
+                <li th:if="${question.type=='综合题'}" style="display:none">
+                    <div class="review-hidden-box review-hidden-box-5" th:utext="${question.review}">无</div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+</html>

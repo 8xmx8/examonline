@@ -1,0 +1,8 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <form id="exam-form" method="post">
+        <div class="form-group">
+            <lable for="exam-form-name">考试名称：</lable>
+            <input class="form-control" id="exam-form-name" th:value="${exam!=null?exam.name:''}" />
+        </div>
+    </form>
+</html>

@@ -1,0 +1,131 @@
+.page-container{
+    width:80%;
+    margin: 0 auto ;
+    min-width: 800px;
+    height:1000px;
+}
+
+.page-part-1{
+    height:50px;
+    background: #eeeeee;
+    margin-bottom: 10px;
+    padding:10px;
+    line-height: 30px;
+}
+
+.page-part-2{
+    width:400px;
+    background: #eeeeee;
+    float: right;
+    margin-left:10px;
+    padding:10px;
+}
+
+.page-part-3{
+    background: #eeeeee;
+    overflow: hidden;
+    margin-bottom:40px;
+}
+
+.page-3-top{
+    height:40px;
+    background: #6666ff;
+    margin-bottom:10px;
+    overflow: hidden;
+}
+
+
+.page-3-content{
+    margin-bottom: 10px;
+
+    padding:10px;
+}
+
+.page-3-bottom{
+    height:40px;
+    background: #6666ff;
+    overflow: hidden;
+}
+
+.page-part-2 dl dt{
+    margin:10px 0;
+    clear: both;
+}
+
+.page-part-2 dl dd{
+    float:left;
+    width:40px;
+    height:40px;
+    border-radius: 10px;
+    border:1px solid #555;
+    text-align: center;
+    line-height: 40px;
+    margin-right:20px;
+    margin-bottom:20px;
+}
+
+.page-3-top a, .page-3-bottom a{
+    color:red;
+}
+
+.page-3-top li , .page-3-bottom li{
+    float:left;
+    width:33% ;
+    text-align:center;
+    line-height: 40px;
+}
+
+.page-3-bottom ul{
+    overflow: hidden;
+}
+
+.page-question li{
+    margin-bottom:20px;
+}
+
+.page-question .page-option{
+    padding:5px 10px;
+    border:1px solid #06f ;
+    border-radius: 6px;
+    cursor: default;
+}
+
+.page-question .page-option.active{
+    background: #06f;
+}
+
+.page-question ul{
+    display:none;
+}
+
+
+.page-part-2 dd.complete{
+    background: #5cb85c;
+}
+
+.page-part-2 dd.mark{
+    background: #f0ad4e;
+}
+
+.page-part-2 dd.active{
+    background:#5bc0de;
+}
+
+
+
+.page-question ul.active{
+    display:block;
+}
+
+.page-question .form-control{
+    width:150px;
+    margin-top:-8px;
+}
+
+.page-part-2 ul li{
+    margin:10px 0;
+}
+.page-part-2 ul li span{
+    padding:0px 25px;
+    border:1px solid #555;
+}

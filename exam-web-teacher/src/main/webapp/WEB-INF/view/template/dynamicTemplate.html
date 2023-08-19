@@ -1,0 +1,229 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <!-- 添加和编辑共用 -->
+
+    <div th:fragment="dynamicTemplate">
+
+        <input type="hidden" id="dynamic-form-id" th:value="${template!=null?template.id:''}" />
+        <div class="form-horizontal dynamic-box" >
+
+           <div class="base-box">
+               <div class="form-group">
+                   <label for="dynamic-form-name" class="col-sm-3 control-label">模板名称</label>
+                   <div class="col-sm-9">
+                       <input type="text" class="form-control" id="dynamic-form-name" th:value="${template!=null?template.name:''}">
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <label for="dynamic-form-course" class="col-sm-3 control-label">关联课程</label>
+                   <div class="col-sm-9">
+                       <input type="text" class="form-control" id="dynamic-form-course" list="dynamic-form-course-list" th:value="${template!=null?template.yl1:''}">
+                       <datalist id="dynamic-form-course-list">
+                           <option th:each="course:${courses}" th:text="${course}"></option>
+                       </datalist>
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <label for="dynamic-form-totalScore" class="col-sm-3 control-label">总分</label>
+                   <div class="col-sm-9">
+                       <input type="text" class="form-control" id="dynamic-form-totalScore" readonly value="0">
+                   </div>
+               </div>
+           </div>
+
+           <ul class="dynamic-question-box">
+               <li>
+                   <div class="title">单选题 <span class="badge" id="dynamic-question1-count" >0 题</span> <span class="badge" id="dynamic-question1-total">0 分</span></div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question1-score" class="col-sm-3 control-label">分数</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question1-score" th:value="${template!=null?template.score1:0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question1-level1" class="col-sm-3 control-label">简单题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question1-level1" th:value="${template!=null?template.question1.get(0):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question1-level2" class="col-sm-3 control-label">中等题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question1-level2" th:value="${template!=null?template.question1.get(1):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question1-level3" class="col-sm-3 control-label">困难题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question1-level3" th:value="${template!=null?template.question1.get(2):0}">
+                       </div>
+                   </div>
+               </li>
+
+               <li>
+                   <div class="title">多选题 <span class="badge" id="dynamic-question2-count">0 题</span> <span class="badge" id="dynamic-question2-total">0 分</span></div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question2-score" class="col-sm-3 control-label">分数</label>
+                       <div class="col-sm-9">
+                           <input type="number" class="form-control" id="dynamic-form-question2-score"  th:value="${template!=null?template.score2:0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question2-level1" class="col-sm-3 control-label">简单题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question2-level1" th:value="${template!=null?template.question2.get(0):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question2-level2" class="col-sm-3 control-label">中等题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question2-level2" th:value="${template!=null?template.question2.get(1):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question2-level3" class="col-sm-3 control-label">困难题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question2-level3" th:value="${template!=null?template.question2.get(2):0}">
+                       </div>
+                   </div>
+
+               </li>
+
+               <li>
+                   <div class="title">判断题 <span class="badge" id="dynamic-question3-count">0 题</span> <span class="badge" id="dynamic-question3-total">0 分</span></div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question3-score" class="col-sm-3 control-label">分数</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question3-score"  th:value="${template!=null?template.score3:0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question3-level1" class="col-sm-3 control-label">简单题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question3-level1" th:value="${template!=null?template.question3.get(0):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question3-level2" class="col-sm-3 control-label">中等题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question3-level2" th:value="${template!=null?template.question3.get(1):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question3-level3" class="col-sm-3 control-label">困难题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question3-level3" th:value="${template!=null?template.question3.get(2):0}">
+                       </div>
+                   </div>
+
+               </li>
+
+               <li>
+                   <div class="title">填空题 <span class="badge" id="dynamic-question4-count">0 题</span> <span class="badge" id="dynamic-question4-total">0 分</span></div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question4-score" class="col-sm-3 control-label">分数</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question4-score" th:value="${template!=null?template.score4:0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question4-level1" class="col-sm-3 control-label">简单题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question4-level1" th:value="${template!=null?template.question4.get(0):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question4-level2" class="col-sm-3 control-label">中等题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question4-level2" th:value="${template!=null?template.question4.get(1):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question4-level3" class="col-sm-3 control-label">困难题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question4-level3" th:value="${template!=null?template.question4.get(2):0}">
+                       </div>
+                   </div>
+
+               </li>
+
+               <li>
+                   <div class="title">综合题 <span class="badge" id="dynamic-question5-count">0 题</span> <span class="badge" id="dynamic-question5-total">0 分</span></div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question5-score" class="col-sm-3 control-label">分数</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question5-score" th:value="${template!=null?template.score5:0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question5-level1" class="col-sm-3 control-label">简单题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question5-level1" th:value="${template!=null?template.question5.get(0):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question5-level2" class="col-sm-3 control-label">中等题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question5-level2" th:value="${template!=null?template.question5.get(1):0}">
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="dynamic-form-question5-level3" class="col-sm-3 control-label">困难题数量</label>
+                       <div class="col-sm-9">
+                           <input type="text" class="form-control" id="dynamic-form-question5-level3" th:value="${template!=null?template.question5.get(2):0}">
+                       </div>
+                   </div>
+
+               </li>
+           </ul>
+
+            <div class="btn-box">
+                <button class="btn btn-primary" onclick="template.dynamic.save()">
+                    <span class="glyphicon glyphicon-ok"></span> 保存
+                </button>
+            </div>
+
+        </div>
+
+        <script>
+            $(function(){
+                $('.dynamic-question-box .form-control').blur(function(){
+                    template.dynamic.calculate();
+                });
+
+                if($('#dynamic-form-id').val() == ''){
+                    //添加操作
+                    $('.dynamic-question-box .form-control').attr({type:'number',value:0});
+                }else{
+                    //编辑操作，默认有分数和题数
+                    template.dynamic.calculate();
+                }
+
+                $('.dynamic-question-box .form-control').focus(function(){
+                    this.select() ;
+                });
+            });
+        </script>
+    </div>
+</html>

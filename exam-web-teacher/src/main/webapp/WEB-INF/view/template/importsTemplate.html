@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <!-- 考题信息导入 -->
+    <form id="static-question-import-form">
+        <div class="form-group">
+            <input type="file" name="excel" id="import-excel" onchange="template.static.chanageFile()"
+                   style="opacity: 0;width:100px;height:30px;position:absolute">
+            <button type="button" class="btn btn-info">
+                <span class="glyphicon glyphicon-file"></span> 选择文件
+            </button>
+
+            <span id="fileMsg"></span>
+        </div>
+
+        <div class="form-group">
+            <a href="template/downTemplate" type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-save"></span> 下载模板
+            </a>
+        </div>
+    </form>
+</html>

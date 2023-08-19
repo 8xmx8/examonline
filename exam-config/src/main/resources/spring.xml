@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <context:component-scan
+            base-package="com.yjy.examonline">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--数据库代理-->
+
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.password}"/>
+
+        <!-- 初始连接数 -->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <!-- 最大连接数 -->
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <!-- 最大等待时间 -->
+        <property name="maxWait" value="${druid.maxWait}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+        <!-- 对指定包中的类设置别名，别名就是类名或类名首字母小写 -->
+        <property name="typeAliasesPackage" value="com.yjy.examonline.domain"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="plugins">
+            <list>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+
+        <!--
+            扫描  mapper 接口所在的包。 未来当我们需要操作这些包中mapper接口时
+            这个Configurer对象就会实现mybatis的mapper机制，生成接口对应的代理类
+            mapper 接口含义和 dao一样。
+         -->
+        <property name="basePackage" value="com.yjy.examonline.dao"/>
+    </bean>
+
+    <!--管理事务-->
+    <bean id="manager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--事务策略-->
+    <tx:advice id="txAdvice" transaction-manager="manager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="load*" read-only="true"/>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="is*" read-only="true"/>
+            <tx:method name="fill" isolation="READ_COMMITTED" propagation="REQUIRED"
+                       rollback-for="java.lang.Throwable"/>
+            <tx:method name="*" isolation="READ_COMMITTED" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--切入点-->
+    <aop:config>
+        <aop:pointcut id="examCut" expression="execution(* com.yjy.examonline.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="examCut"/>
+    </aop:config>
+
+</beans>

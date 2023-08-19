@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--起别名-->
+    <!--    <typeAliases>-->
+    <!--        <typeAlias type="com.yjy.examonline.domain.StudentExam" alias="StudentExam"/>-->
+    <!--    </typeAliases>-->
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+
+        <!--解决mybatis的null值不存储问题-->
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
+</configuration>

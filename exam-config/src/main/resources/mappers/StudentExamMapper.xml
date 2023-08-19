@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.StudentExamMapper">
+
+    <resultMap id="studentExamMap" type="com.yjy.examonline.domain.StudentExam">
+        <id column="exam_id" jdbcType="BIGINT" property="examId"/>
+        <id column="student_id" jdbcType="BIGINT" property="studentId"/>
+        <result column="exam_group" jdbcType="VARCHAR" property="examGroup"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="answer1" jdbcType="VARCHAR" property="answer1"/>
+        <result column="answer2" jdbcType="VARCHAR" property="answer2"/>
+        <result column="answer3" jdbcType="VARCHAR" property="answer3"/>
+        <result column="answer4" jdbcType="VARCHAR" property="answer4"/>
+        <result column="answer5" jdbcType="VARCHAR" property="answer5"/>
+        <result column="review4" jdbcType="VARCHAR" property="review4"/>
+        <result column="review5" jdbcType="VARCHAR" property="review5"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="page_path" jdbcType="VARCHAR" property="pagePath"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="studentExamDTOMap" type="com.yjy.examonline.domain.dto.StudentExamDTO">
+        <id column="exam_id" jdbcType="BIGINT" property="examId"/>
+        <id column="student_id" jdbcType="BIGINT" property="studentId"/>
+        <result column="exam_group" jdbcType="VARCHAR" property="examGroup"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="answer1" jdbcType="VARCHAR" property="answer1"/>
+        <result column="answer2" jdbcType="VARCHAR" property="answer2"/>
+        <result column="answer3" jdbcType="VARCHAR" property="answer3"/>
+        <result column="answer4" jdbcType="VARCHAR" property="answer4"/>
+        <result column="answer5" jdbcType="VARCHAR" property="answer5"/>
+        <result column="review4" jdbcType="VARCHAR" property="review4"/>
+        <result column="review5" jdbcType="VARCHAR" property="review5"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="page_path" jdbcType="VARCHAR" property="pagePath"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="sname" jdbcType="VARCHAR" property="sname"/>
+        <result column="ename" jdbcType="VARCHAR" property="ename"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        exam_id
+        , student_id, exam_group, status, start_time, end_time, answer1, answer2,
+    answer3, answer4, answer5, review4, review5, score, page_path, yl1, yl2, yl3, yl4, 
+    create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="studentExamMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_student_exam
+        where exam_id = #{examId,jdbcType=BIGINT}
+        and student_id = #{studentId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="map">
+        delete
+        from t_student_exam
+        where exam_id = #{examId,jdbcType=BIGINT}
+          and student_id = #{studentId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.StudentExam">
+        insert into t_student_exam (exam_id, student_id, exam_group,
+                                    status, start_time, end_time,
+                                    answer1, answer2, answer3,
+                                    answer4, answer5, review4,
+                                    review5, score, page_path,
+                                    yl1, yl2, yl3, yl4,
+                                    create_time, update_time)
+        values (#{examId,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, #{examGroup,jdbcType=VARCHAR},
+                #{status,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+                #{answer1,jdbcType=VARCHAR}, #{answer2,jdbcType=VARCHAR}, #{answer3,jdbcType=VARCHAR},
+                #{answer4,jdbcType=VARCHAR}, #{answer5,jdbcType=VARCHAR}, #{review4,jdbcType=VARCHAR},
+                #{review5,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{pagePath,jdbcType=VARCHAR},
+                #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.StudentExam">
+        insert into t_student_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="examId != null">
+                exam_id,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="examGroup != null">
+                exam_group,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="answer1 != null">
+                answer1,
+            </if>
+            <if test="answer2 != null">
+                answer2,
+            </if>
+            <if test="answer3 != null">
+                answer3,
+            </if>
+            <if test="answer4 != null">
+                answer4,
+            </if>
+            <if test="answer5 != null">
+                answer5,
+            </if>
+            <if test="review4 != null">
+                review4,
+            </if>
+            <if test="review5 != null">
+                review5,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="pagePath != null">
+                page_path,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="examId != null">
+                #{examId,jdbcType=BIGINT},
+            </if>
+            <if test="studentId != null">
+                #{studentId,jdbcType=BIGINT},
+            </if>
+            <if test="examGroup != null">
+                #{examGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="answer1 != null">
+                #{answer1,jdbcType=VARCHAR},
+            </if>
+            <if test="answer2 != null">
+                #{answer2,jdbcType=VARCHAR},
+            </if>
+            <if test="answer3 != null">
+                #{answer3,jdbcType=VARCHAR},
+            </if>
+            <if test="answer4 != null">
+                #{answer4,jdbcType=VARCHAR},
+            </if>
+            <if test="answer5 != null">
+                #{answer5,jdbcType=VARCHAR},
+            </if>
+            <if test="review4 != null">
+                #{review4,jdbcType=VARCHAR},
+            </if>
+            <if test="review5 != null">
+                #{review5,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="pagePath != null">
+                #{pagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.StudentExam">
+        update t_student_exam
+        <set>
+            <if test="examGroup != null">
+                exam_group = #{examGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="answer1 != null">
+                answer1 = #{answer1,jdbcType=VARCHAR},
+            </if>
+            <if test="answer2 != null">
+                answer2 = #{answer2,jdbcType=VARCHAR},
+            </if>
+            <if test="answer3 != null">
+                answer3 = #{answer3,jdbcType=VARCHAR},
+            </if>
+            <if test="answer4 != null">
+                answer4 = #{answer4,jdbcType=VARCHAR},
+            </if>
+            <if test="answer5 != null">
+                answer5 = #{answer5,jdbcType=VARCHAR},
+            </if>
+            <if test="review4 != null">
+                review4 = #{review4,jdbcType=VARCHAR},
+            </if>
+            <if test="review5 != null">
+                review5 = #{review5,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="pagePath != null">
+                page_path = #{pagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where exam_id = #{examId,jdbcType=BIGINT}
+        and student_id = #{studentId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.StudentExam">
+        update t_student_exam
+        set exam_group  = #{examGroup,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=VARCHAR},
+            start_time  = #{startTime,jdbcType=TIMESTAMP},
+            end_time    = #{endTime,jdbcType=TIMESTAMP},
+            answer1     = #{answer1,jdbcType=VARCHAR},
+            answer2     = #{answer2,jdbcType=VARCHAR},
+            answer3     = #{answer3,jdbcType=VARCHAR},
+            answer4     = #{answer4,jdbcType=VARCHAR},
+            answer5     = #{answer5,jdbcType=VARCHAR},
+            review4     = #{review4,jdbcType=VARCHAR},
+            review5     = #{review5,jdbcType=VARCHAR},
+            score       = #{score,jdbcType=INTEGER},
+            page_path   = #{pagePath,jdbcType=VARCHAR},
+            yl1         = #{yl1,jdbcType=VARCHAR},
+            yl2         = #{yl2,jdbcType=VARCHAR},
+            yl3         = #{yl3,jdbcType=VARCHAR},
+            yl4         = #{yl4,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where exam_id = #{examId,jdbcType=BIGINT}
+          and student_id = #{studentId,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findRefClasses" resultType="map">
+        select exam_group,
+               class_name,
+               if(class_name is null, concat('x,', sids), sids) sids
+        from (select exam_group,
+                     group_concat(student_id) sids
+              from t_student_exam
+              where exam_id = #{examId}
+              group by exam_group) t1
+                 left join
+             (select concat(grade, '-', major, '-', class_no) class_name
+              from t_student
+              group by grade, major, class_no) t2
+             on t1.exam_group = t2.class_name
+    </select>
+
+    <select id="findStudentIdByExam" resultType="long">
+        select student_id
+        from t_student_exam
+        where exam_id = #{examId}
+    </select>
+
+
+    <delete id="removeReference">
+        delete from t_student_exam
+        where
+        concat(exam_id,'-',student_id) in
+        <foreach collection="list" item="se" open="(" close=")" separator=",">
+            concat(#{se.examId},'-',#{se.studentId})
+        </foreach>
+    </delete>
+
+    <insert id="addReference">
+        insert into t_student_exam(exam_id,student_id,exam_group , status , create_time)
+        values
+        <foreach collection="list" item="se" open="" close=";" separator=",">
+            (#{se.examId},#{se.studentId},#{se.examGroup},#{se.status},now())
+        </foreach>
+    </insert>
+    <select id="findPagePathCount" resultType="int">
+        select count(page_path)
+        from t_student_exam
+        where exam_id = #{examId}
+          and page_path is not null
+    </select>
+    <update id="updatePagePath">
+        update t_student_exam set page_path=#{pagePath},update_time=now()
+        where
+        exam_id = #{examId}
+        <if test="studentId != null and studentId != ''">
+            and student_id = #{studentId}
+        </if>
+    </update>
+
+    <update id="removePagePath">
+        update t_student_exam
+        set page_path  = null,
+            update_time=now()
+        where exam_id = #{examId}
+    </update>
+
+    <delete id="removeRefStudentsByExam">
+        delete
+        from t_student_exam
+        where exam_id = #{examId}
+    </delete>
+    <select id="findStudentExamById" resultMap="studentExamMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_student_exam
+        where
+        exam_id = #{examId} and student_id = #{studentId}
+    </select>
+
+    <update id="changeStatus">
+        update t_student_exam
+        set status      = #{status},
+            update_time = now()
+        where exam_id = #{examId}
+          and student_id = #{studentId}
+    </update>
+
+    <update id="updateStartTime">
+        update t_student_exam
+        set start_time = now(),
+            update_time=now()
+        where exam_id = #{examId}
+          and student_id = #{studentId}
+    </update>
+
+    <update id="updateAnswer">
+        update t_student_exam
+        set answer1=#{answer1},
+            answer2=#{answer2},
+            answer3=#{answer3},
+            answer4=#{answer4},
+            answer5=#{answer5},
+            update_time=now()
+        where exam_id = #{examId}
+          and student_id = #{studentId}
+    </update>
+
+    <update id="updateFinishByExam">
+        update t_student_exam
+        set status     = '已完成',
+            update_time=now()
+        where exam_id = #{examId}
+          and status = '考试中'
+    </update>
+
+    <update id="updateMissByExam">
+        update t_student_exam
+        set status     = '缺考',
+            update_time=now()
+        where exam_id = #{examId}
+          and status = '未考试'
+    </update>
+
+
+    <select id="findClassesByExam" resultType="map">
+        select exam_id    examId,
+               exam_group className,
+               count(*) count
+        from
+            t_student_exam
+        group by exam_id, exam_group
+        having exam_id=#{examId};
+    </select>
+
+    <select id="findStudentsByExamAndClass" resultMap="studentExamDTOMap">
+        select se.*,
+               s.sname,
+               s.code
+        from t_student_exam se
+                 inner join t_student s
+                            on se.student_id = s.id
+                                and exam_id = #{examId}
+                                and exam_group = #{className}
+    </select>
+
+    <select id="findInterruptStudents" resultMap="studentExamMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_student_exam
+        where
+        exam_id = #{examId}
+        and status = '考试中'
+    </select>
+
+
+    <select id="findStudentExamYears" resultType="int">
+        select
+            year (ifnull(e.start_time, e.create_time)) year
+        from
+            t_student_exam se
+            inner join t_exam e
+        on se.exam_id = e.id
+        group by se.student_id, year
+        having se.student_id = #{studentId}
+        order by year desc
+    </select>
+
+    <select id="findStudentScores" resultMap="studentExamDTOMap">
+        select e.name ename,
+               se.start_time,
+               se.score,
+               se.status
+        from t_student_exam se
+                 inner join t_exam e on se.exam_id = e.id
+            and se.student_id = #{studentId}
+            and year (ifnull(e.start_time, e.create_time)) = #{year}
+
+    </select>
+
+</mapper>

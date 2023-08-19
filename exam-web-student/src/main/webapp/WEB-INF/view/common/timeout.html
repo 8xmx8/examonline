@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>未登录</title>
+        <base th:href="@{/}" />
+    </head>
+    <body>
+        <h3>尚未登录或会话超时，请重新登录...</h3>
+        <script>
+            setTimeout(function(){
+                location.href='';
+            },1000);
+        </script>
+    </body>
+</html>

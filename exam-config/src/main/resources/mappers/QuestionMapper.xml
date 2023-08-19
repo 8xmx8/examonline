@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.examonline.dao.QuestionMapper">
+    <resultMap id="questionMap" type="com.yjy.examonline.domain.Question">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="course" jdbcType="VARCHAR" property="course"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="subject" jdbcType="VARCHAR" property="subject"/>
+        <result column="options" jdbcType="VARCHAR" property="options"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="tid" jdbcType="BIGINT" property="tid"/>
+        <result column="yl1" jdbcType="VARCHAR" property="yl1"/>
+        <result column="yl2" jdbcType="VARCHAR" property="yl2"/>
+        <result column="yl3" jdbcType="VARCHAR" property="yl3"/>
+        <result column="yl4" jdbcType="VARCHAR" property="yl4"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , type, course, level, subject, options, answer, status, tid, yl1, yl2, yl3, yl4,
+    create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="questionMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_question
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from t_question
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.yjy.examonline.domain.Question"
+            useGeneratedKeys="true"
+            keyProperty="id"
+    >
+        insert into t_question (id, type, course,
+                                level, subject, options,
+                                answer, status, tid,
+                                yl1, yl2, yl3, yl4,
+                                create_time, update_time)
+        values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{course,jdbcType=VARCHAR},
+                #{level,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{options,jdbcType=VARCHAR},
+                #{answer,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{tid,jdbcType=BIGINT},
+                #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR},
+                now(), #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yjy.examonline.domain.Question">
+        insert into t_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="course != null">
+                course,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="options != null">
+                options,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="yl1 != null">
+                yl1,
+            </if>
+            <if test="yl2 != null">
+                yl2,
+            </if>
+            <if test="yl3 != null">
+                yl3,
+            </if>
+            <if test="yl4 != null">
+                yl4,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="course != null">
+                #{course,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="options != null">
+                #{options,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="yl1 != null">
+                #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yjy.examonline.domain.Question">
+        update t_question
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="course != null">
+                course = #{course,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="options != null">
+                options = #{options,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tid != null">
+                tid = #{tid,jdbcType=BIGINT},
+            </if>
+            <if test="yl1 != null">
+                yl1 = #{yl1,jdbcType=VARCHAR},
+            </if>
+            <if test="yl2 != null">
+                yl2 = #{yl2,jdbcType=VARCHAR},
+            </if>
+            <if test="yl3 != null">
+                yl3 = #{yl3,jdbcType=VARCHAR},
+            </if>
+            <if test="yl4 != null">
+                yl4 = #{yl4,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yjy.examonline.domain.Question">
+        update t_question
+        set type        = #{type,jdbcType=VARCHAR},
+            course      = #{course,jdbcType=VARCHAR},
+            level       = #{level,jdbcType=VARCHAR},
+            subject     = #{subject,jdbcType=VARCHAR},
+            options     = #{options,jdbcType=VARCHAR},
+            answer      = #{answer,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=VARCHAR},
+            tid         = #{tid,jdbcType=BIGINT},
+            yl1         = #{yl1,jdbcType=VARCHAR},
+            yl2         = #{yl2,jdbcType=VARCHAR},
+            yl3         = #{yl3,jdbcType=VARCHAR},
+            yl4         = #{yl4,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findByTypeAndStatusAndCourse" resultMap="questionMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_question
+        where
+        type = #{type}
+        and course = #{course}
+        and level = #{level}
+        and status = '公有'
+    </select>
+
+</mapper>

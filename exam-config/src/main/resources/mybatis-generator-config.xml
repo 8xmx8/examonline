@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--读取数据库配置文件-->
+    <properties resource="db.properties"/>
+
+    <!--
+        defaultModelType 默认情况下，会将联合主键的属性生成在一个独立的类中
+                                   会将text，blob类型的属性生成一个独立的类中
+                         设置属性值"flat" 会将所有的属性都生成在一个实体类中
+     -->
+    <context id="Mygenerator" defaultModelType="flat" targetRuntime="MyBatis3">
+
+        <!-- 通过这个属性去掉自动生成的时候跟随生成的一些注释 -->
+        <commentGenerator><!--非必要部分-->
+            <!-- 去掉注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!--去掉时间戳 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!--配置数据库链接-->
+        <jdbcConnection driverClass="${mysql.driver}"
+                        connectionURL="${mysql.url}"
+                        userId="${mysql.username}"
+                        password="${mysql.password}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- java与jdbc数据转换 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--
+        javaModelGenerator domain实体类的设置
+        targetpackage  输出包路径 指定类所在的包路径
+        targetProject 输出项目位置
+          -->
+        <javaModelGenerator targetPackage="com.yjy.examonline.domain" targetProject="exam-domain/src/main/java">
+            <!--enableSubPackages是否开启子包名,是否在名称后面加上scheme-->
+            <property name="enableSubPackages" value="false"/>
+
+            <!--在set中去掉空格 (trim)-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 设置生成的mapper.xml所在的位置 -->
+        <sqlMapGenerator targetPackage="mappers" targetProject="exam-config/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成的java接口的配置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yjy.examonline.dao"
+                             targetProject="exam-dao/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--需要自动生成的表的表名-->
+        <table tableName="t_dictionary"
+               domainObjectName="Dictionary"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        />
+
+        <table tableName="t_teacher" domainObjectName="Teacher"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"/>
+
+        <table tableName="t_student" domainObjectName="Student"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"/>
+
+        <table tableName="t_question" domainObjectName="Question"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false">
+
+            <columnOverride column="subject" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="options" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="answer" jdbcType="VARCHAR" javaType="java.lang.String"/>
+
+        </table>
+
+        <table tableName="t_template" domainObjectName="Template"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false">
+
+            <columnOverride column="question1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="question2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="question3" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="question4" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="question5" jdbcType="VARCHAR" javaType="java.lang.String"/>
+
+        </table>
+
+        <table tableName="t_exam" domainObjectName="Exam"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"/>
+
+        <table tableName="t_student_exam" domainObjectName="StudentExam"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false">
+
+            <columnOverride column="answer1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="answer2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="answer3" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="answer4" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="answer5" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="review4" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <columnOverride column="review5" jdbcType="VARCHAR" javaType="java.lang.String"/>
+
+        </table>
+
+    </context>
+</generatorConfiguration>

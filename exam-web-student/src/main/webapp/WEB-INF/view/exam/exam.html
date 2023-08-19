@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考试信息 爱坤集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <script src="js/exam.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <!-- 自定义动态内容 -->
+
+    <div style="width:80%;padding:20px;margin:100px auto;border:1px solid #ccc;">
+        <div class="form-inline form-search">
+            <div class="form-group">
+                <label for="search-timeFlag">考试列表：</label>
+                <select id="search-timeFlag" class="form-control" onchange="exam.changeTimeFlag()">
+                    <option value="1">当天</option>
+                    <option value="2">本周</option>
+                    <option value="3">本月</option>
+                </select>
+            </div>
+        </div>
+        <table id="examGrid" class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>考试名称</th>
+                <th>考试时间</th>
+                <th>考试状态</th>
+                <th>参考状态</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${exams == null or exams.size() == 0}">
+                <tr>
+                    <td colspan="6" align="center">没有找到任何考试信息</td>
+                </tr>
+            </th:block>
+            <th:block th:unless="${exams == null or exams.size() == 0}">
+                <tr th:each="exam:${exams}">
+                    <td th:text="${examStat.index+1}"></td>
+                    <td th:text="${exam.name}"></td>
+                    <td>
+                        <span th:if="${exam.startTime != null and exam.duration==null }">[[${#strings.replace(exam.startTime,'T',' ')}]] - [[${#strings.replace(exam.endTime,'T',' ')}]]</span>
+                        <span th:if="${exam.duration != null and exam.startTime==null}">[[${exam.duration}]]分钟</span>
+                    </td>
+                    <td th:text="${exam.state}"></td>
+                    <td th:text="${exam.status}"></td>
+                    <td>
+                        <a th:href="|javascript:exam.enterExam(${exam.examId})|">进入考试</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Project exclude paths
+/exam-common/target/
+/exam-config/target/
+/exam-dao/target/
+/exam-domain/target/
+/exam-service/target/
+/exam-test/target/
+/exam-web-student/target/
+/exam-web-teacher/target/
+/out/

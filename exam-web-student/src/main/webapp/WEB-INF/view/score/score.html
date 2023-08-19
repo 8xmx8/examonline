@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩查询 爱坤集团</title>
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+    <script src="js/score.js"></script>
+
+</head>
+<body>
+<div th:replace="common::header"></div>
+
+<div th:replace="common::nav"></div>
+
+<div class="content-box">
+    <!-- 自定义动态内容 -->
+
+    <div style="width:80%;padding:20px;margin:100px auto;border:1px solid #ccc;">
+        <div class="form-inline form-search">
+            <div class="form-group">
+                <label for="search-yearFlag">年份搜索：</label>
+                <select id="search-yearFlag" class="form-control" onchange="score.changeYear()">
+                    <option th:each="year:${years}" th:text="${year}"></option>
+                </select>
+            </div>
+        </div>
+        <table id="scoreGrid" class="table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>考试名称</th>
+                <th>考试时间</th>
+                <th>得分</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${scores == null or scores.size() == 0}">
+                <tr>
+                    <td colspan="6" align="center">没有找到任何考试成绩</td>
+                </tr>
+            </th:block>
+            <th:block th:unless="${scores == null or scores.size() == 0}">
+                <tr th:each="score:${scores}">
+                    <td th:text="${scoreStat.index+1}"></td>
+                    <td th:text="${score.ename}"></td>
+                    <td>
+                        <span>[[${score.startTime==null?'':#dates.format(score.startTime,'yyyy-MM-dd HH:mm')}]]</span>
+                    </td>
+                    <td th:text="${score.status=='缺考'?'缺考':score.score}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<div th:replace="common::footer"></div>
+
+<div th:replace="common::modal"></div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <input type="hidden" id="adjust-old-className" th:value="${className}"/>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-inline">
+
+                <input th:if="${custom=='N'}" class="form-control" id="adjust-search-className" th:value="${className}" readonly />
+
+                <input th:unless="${custom=='N'}" class="form-control" id="adjust-search-className" />
+
+                <button class="btn" th:disabled="${custom=='N'}" onclick="exam.toQueryUnbindStudents()">
+                    <span></span> 查询
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4 align="center">未关联学生</h4>
+        </div>
+        <div class="col-md-6">
+            <h4 align="center">已关联学生</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <table id="unbindGrid" class="table">
+                <thead>
+                    <tr>
+                        <th width="15%">序号</th>
+                        <th width="50%">班级名称</th>
+                        <th width="35%">学生名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:unless="${unbindStudents == null or unbindStudents.size() == 0}">
+                        <tr th:each="student:${unbindStudents}" th:ondblclick="exam.bindStudent(this,[[${student.sid}]])">
+                            <td th:text="${studentStat.index+1}"></td>
+                            <td th:text="${student.className}"></td>
+                            <td th:text="${student.sname}"></td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table id="bindGrid" class="table">
+                <thead>
+                <tr>
+                    <th width="15%">序号</th>
+                    <th width="50%">班级名称</th>
+                    <th width="35%">学生名称</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <th:block th:unless="${bindStudents == null or bindStudents.size() == 0}">
+                        <tr th:each="student:${bindStudents}" th:ondblclick="exam.unbindStudent(this,[[${student.sid}]])">
+                            <td th:text="${studentStat.index+1}"></td>
+                            <td th:text="${student.className}"></td>
+                            <td th:text="${student.sname}"></td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</html>

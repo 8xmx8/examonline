@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <!-- 新建和编辑通用模板 -->
+    <div class="alert alert-warning" role="alert">
+        说明：输入的班级格式必须是 1班，2班
+    </div>
+    <form class="form-horizontal">
+        <input type="hidden" id="form-id" th:value="${student!=null?student.id:''}" />
+        <div class="form-group">
+            <label for="form-code" class="col-sm-2 control-label">学号</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="form-code" th:value="${student!=null?student.code:''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="form-sname" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="form-sname" th:value="${student!=null?student.sname:''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="form-grade" class="col-sm-2 control-label">学年</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="form-grade" th:value="${student!=null?student.grade:''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="form-major" class="col-sm-2 control-label">专业</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="form-major" list="major-list" th:value="${student!=null?student.major:''}">
+                <datalist id="major-list">
+                    <option th:each="major:${majors}" th:text="${major}"></option>
+                </datalist>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="form-classNo" class="col-sm-2 control-label">班级</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="form-classNo" th:value="${student!=null?student.classNo:''}">
+            </div>
+        </div>
+    </form>
+</html>

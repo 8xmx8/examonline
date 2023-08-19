@@ -1,0 +1,26 @@
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/exam-config" />
+    <file type="web" url="file://$PROJECT_DIR$/exam-web-student" />
+    <file type="web" url="file://$PROJECT_DIR$/exam-web-teacher" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/exam-common/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-config/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-test/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-web-student/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-web-teacher/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-service/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-domain/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

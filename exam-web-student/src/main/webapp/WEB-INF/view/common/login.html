@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录 爱坤集团</title>
+    <!-- @{/} thymeleaf的根目录就是工程根目录 8080/examonline/ -->
+    <!-- / 服务器根目录 8080/ -->
+    <base th:href="@{/}"/>
+
+    <th:block th:include="common::link"></th:block>
+
+
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <script src="js/login.js"></script>
+
+</head>
+<body>
+<div class="login-box">
+    <form>
+        <div class="form-group">
+            <h2 algin="center" th:text="#{login_label}"></h2>
+            <div id="msg"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="sname" th:text="#{student_user_label}"></label>
+            <div class="input-group">
+                        <span class="input-group-addon ">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                <input type="text" name="sname" class="form-control" id="sname">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pass" th:text="#{password_label}"></label>
+            <div class="input-group">
+                        <span class="input-group-addon ">
+                            <span class="glyphicon glyphicon-lock"></span>
+                        </span>
+                <input type="password" name="pass" class="form-control" id="pass">
+            </div>
+        </div>
+
+        <div class="form-group checkbox">
+            <label>
+                <input type="checkbox"> <span th:text="#{remember_label}"></span>
+            </label>
+        </div>
+        <button onclick="login.toLogin()" type="button" class="btn btn-info btn-block"
+                th:text="#{login_btn_label}"></button>
+    </form>
+</div>
+
+<footer>
+    <a href="common/login.html?lang=zh_CN" th:text="#{zh_label}">中文</a>
+    <a href="common/login.html?lang=en_US" th:text="#{en_label}">英文</a>
+</footer>
+</body>
+</html>

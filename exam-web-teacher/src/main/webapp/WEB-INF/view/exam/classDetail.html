@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-inline">
+                <input  class="form-control" id="adjust-search-className" th:value="${className}" readonly />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="bindGrid" class="table">
+                <thead>
+                <tr>
+                    <th width="15%">序号</th>
+                    <th width="50%">班级名称</th>
+                    <th width="35%">学生名称</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <th:block th:unless="${bindStudents == null or bindStudents.size() == 0}">
+                        <tr th:each="student:${bindStudents}">
+                            <td th:text="${studentStat.index+1}"></td>
+                            <td th:text="${student.className}"></td>
+                            <td th:text="${student.sname}"></td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</html>
