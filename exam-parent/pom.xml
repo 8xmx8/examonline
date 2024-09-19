@@ -15,7 +15,7 @@
         <junit4.version>4.12</junit4.version>
         <aspectj.version>1.9.6</aspectj.version>
         <upload.version>1.5</upload.version>
-        <jackson.version>2.13.0</jackson.version>
+        <jackson.version>2.13.4.2</jackson.version>
         <mybatis.version>3.5.7</mybatis.version>
         <mybatis.generator.version>1.4.0</mybatis.generator.version>
         <mysql.version>8.0.27</mysql.version>
