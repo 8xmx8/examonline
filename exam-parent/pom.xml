@@ -27,7 +27,7 @@
         <log4j.version>2.11.1</log4j.version>
         <poi.version>4.1.2</poi.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
-        <hutool.version>5.7.16</hutool.version>
+        <hutool.version>5.8.21</hutool.version>
     </properties>
     <dependencyManagement>
         <dependencies>
